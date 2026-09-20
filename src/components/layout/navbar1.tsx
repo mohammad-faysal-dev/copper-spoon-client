@@ -56,15 +56,15 @@ const Navbar1 = ({
     url: "/",
     src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
     alt: "Logo",
-    title: "Shadcnblocks.com",
+    title: "Copper Spoon",
   },
 
   menu = [
     { title: "Home", url: "/" },
-    { title: "Products", url: "/products" },
-    { title: "Resources", url: "/resources" },
-    { title: "Pricing", url: "/pricing" },
-    { title: "Blog", url: "/blog" },
+    { title: "Menu", url: "/menu" },
+    { title: "About", url: "/about" },
+    { title: "Reservations", url: "/reservations" },
+    { title: "Contact", url: "/contact" },
   ],
 
   auth = {
@@ -81,35 +81,32 @@ const Navbar1 = ({
   className,
 }: Navbar1Props) => {
   return (
-    <section className={cn("py-4", className)}>
-      <div className="container mx-auto">
-        {/* ================= Desktop Navbar ================= */}
-        <nav className="hidden items-center justify-between lg:flex">
-          {/* Logo + Menu */}
+    <header className={cn("sticky top-0 z-50 border-b border-border/80 bg-background/80 backdrop-blur-xl", className)}>
+      <div className="container mx-auto px-4 md:px-6 lg:px-8">
+        <nav className="hidden items-center justify-between py-4 lg:flex">
           <div className="flex items-center gap-10">
-            {/* Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <Image
-                src={logo.src}
-                width={32}
-                height={32}
-                className={cn("max-h-8 w-auto dark:invert", logo.className)}
-                alt={logo.alt}
-              />
+            <a href={logo.url} className="group flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-lg font-bold text-primary-foreground shadow-sm shadow-primary/20 transition-transform duration-200 group-hover:scale-105">
+                C
+              </div>
 
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
+              <div className="leading-none">
+                <span className="block text-lg font-semibold tracking-tight text-foreground">
+                  {logo.title}
+                </span>
+                <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.28em] text-muted-foreground">
+                  Kitchen & Co.
+                </span>
+              </div>
             </a>
 
-            {/* Menu */}
             <NavigationMenu>
-              <NavigationMenuList>
+              <NavigationMenuList className="gap-1">
                 {menu.map((item) => (
                   <NavigationMenuItem key={item.title}>
                     <NavigationMenuLink
                       href={item.url}
-                      className="inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-muted hover:text-accent-foreground"
+                      className="inline-flex h-10 items-center justify-center rounded-full px-4 text-sm font-medium text-muted-foreground transition-all duration-200 hover:bg-muted hover:text-foreground data-active:bg-muted data-active:text-foreground"
                     >
                       {item.title}
                     </NavigationMenuLink>
@@ -119,13 +116,13 @@ const Navbar1 = ({
             </NavigationMenu>
           </div>
 
-          {/* Right Side */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <ModeToggle />
 
             <Button
               variant="outline"
               size="sm"
+              className="rounded-full border-border bg-background px-4 text-sm font-medium shadow-sm"
               render={<a href={auth.login.url} />}
               nativeButton={false}
             >
@@ -134,6 +131,7 @@ const Navbar1 = ({
 
             <Button
               size="sm"
+              className="rounded-full px-4 text-sm font-medium shadow-sm shadow-primary/20"
               render={<a href={auth.signup.url} />}
               nativeButton={false}
             >
@@ -142,92 +140,90 @@ const Navbar1 = ({
           </div>
         </nav>
 
-        {/* ================= Mobile Navbar ================= */}
-        <div className="block lg:hidden">
-          <div className="flex items-center justify-between">
-            {/* Mobile Logo */}
-            <a href={logo.url} className="flex items-center gap-2">
-              <Image
-                src={logo.src}
-                width={32}
-                height={32}
-                className={cn("max-h-8 w-auto dark:invert", logo.className)}
-                alt={logo.alt}
-              />
+        <div className="block py-3 lg:hidden">
+          <div className="flex items-center justify-between gap-3">
+            <a href={logo.url} className="group flex items-center gap-3">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground shadow-sm shadow-primary/20">
+                C
+              </div>
 
-              <span className="text-lg font-semibold tracking-tighter">
-                {logo.title}
-              </span>
+              <div className="leading-none">
+                <span className="block text-base font-semibold tracking-tight text-foreground">
+                  {logo.title}
+                </span>
+                <span className="mt-1 block text-[9px] uppercase tracking-[0.24em] text-muted-foreground">
+                  Kitchen & Co.
+                </span>
+              </div>
             </a>
 
-            {/* Mobile Menu Button */}
-            <Sheet>
-              <SheetTrigger render={<Button variant="outline" size="icon" />}>
-                <Menu className="size-4" />
-              </SheetTrigger>
+            <div className="flex items-center gap-2">
+              <ModeToggle />
 
-              <SheetContent className="overflow-y-auto">
-                <SheetHeader>
-                  <SheetTitle>
-                    <a href={logo.url} className="flex items-center gap-2">
-                      <Image
-                        src={logo.src}
-                        width={32}
-                        height={32}
-                        className={cn(
-                          "max-h-8 w-auto dark:invert",
-                          logo.className,
-                        )}
-                        alt={logo.alt}
-                      />
+              <Sheet>
+                <SheetTrigger render={<Button variant="outline" size="icon" className="rounded-full" />}>
+                  <Menu className="size-4" />
+                </SheetTrigger>
 
-                      <span className="text-lg font-semibold tracking-tighter">
-                        {logo.title}
-                      </span>
-                    </a>
-                  </SheetTitle>
-                </SheetHeader>
+                <SheetContent side="right" className="overflow-y-auto">
+                  <SheetHeader className="mb-4">
+                    <SheetTitle>
+                      <a href={logo.url} className="flex items-center gap-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
+                          C
+                        </div>
 
-                <div className="flex flex-col gap-6 p-4">
-                  {/* Mobile Menu */}
-                  <nav className="flex flex-col gap-4">
-                    {menu.map((item) => (
-                      <a
-                        key={item.title}
-                        href={item.url}
-                        className="text-md font-semibold transition-colors hover:text-primary"
-                      >
-                        {item.title}
+                        <div className="leading-none">
+                          <span className="block text-base font-semibold tracking-tight text-foreground">
+                            {logo.title}
+                          </span>
+                          <span className="mt-1 block text-[9px] uppercase tracking-[0.24em] text-muted-foreground">
+                            Kitchen & Co.
+                          </span>
+                        </div>
                       </a>
-                    ))}
-                  </nav>
+                    </SheetTitle>
+                  </SheetHeader>
 
-                  {/* Mobile Actions */}
-                  <div className="flex flex-col gap-3">
-                    <ModeToggle />
+                  <div className="flex flex-col gap-6 p-1">
+                    <nav className="flex flex-col gap-2">
+                      {menu.map((item) => (
+                        <a
+                          key={item.title}
+                          href={item.url}
+                          className="rounded-xl px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
+                        >
+                          {item.title}
+                        </a>
+                      ))}
+                    </nav>
 
-                    <Button
-                      variant="outline"
-                      render={<a href={auth.login.url} />}
-                      nativeButton={false}
-                    >
-                      {auth.login.title}
-                    </Button>
+                    <div className="flex flex-col gap-3 pt-2">
+                      <Button
+                        variant="outline"
+                        className="rounded-full"
+                        render={<a href={auth.login.url} />}
+                        nativeButton={false}
+                      >
+                        {auth.login.title}
+                      </Button>
 
-                    <Button
-                      render={<a href={auth.signup.url} />}
-                      nativeButton={false}
-                    >
-                      {auth.signup.title}
-                    </Button>
+                      <Button
+                        className="rounded-full"
+                        render={<a href={auth.signup.url} />}
+                        nativeButton={false}
+                      >
+                        {auth.signup.title}
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </SheetContent>
-            </Sheet>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </header>
   );
 };
 
