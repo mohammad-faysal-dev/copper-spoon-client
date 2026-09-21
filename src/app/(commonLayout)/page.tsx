@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Utensils, Clock, Star, MapPin } from "lucide-react";
+import { ArrowRight, Utensils, Clock, Star, MapPin, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
@@ -95,6 +95,88 @@ export default function Home() {
             {/* Decorative block */}
             <div className="absolute -bottom-8 -left-8 h-48 w-48 rounded-full border-4 border-primary/20 blur-2xl"></div>
           </div>
+        </div>
+      </section>
+
+      {/* Featured Menu Section */}
+      <section className="py-24 bg-muted/30 relative">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="text-center mb-16 space-y-4">
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">Signatures</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto text-lg">A glimpse into our meticulously crafted specials, blending tradition with modern flair.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {[
+              { name: "Truffle Risotto", price: "$32", img: "https://images.unsplash.com/photo-1633504581786-316c8002b1b9?auto=format&fit=crop&q=80&w=600", desc: "Wild mushrooms, parmesan crisp, white truffle oil." },
+              { name: "Pan-Seared Scallops", price: "$38", img: "https://images.unsplash.com/photo-1626804475297-41609ea004eb?auto=format&fit=crop&q=80&w=600", desc: "Cauliflower purée, brown butter, micro herbs." },
+              { name: "Wagyu Beef Filet", price: "$65", img: "https://images.unsplash.com/photo-1544025162-83113115456f?auto=format&fit=crop&q=80&w=600", desc: "Potato pave, asparagus, red wine reduction." }
+            ].map((item, idx) => (
+              <div key={idx} className="group flex flex-col bg-card rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 border border-border">
+                <div className="relative h-64 overflow-hidden">
+                  <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-md px-3 py-1 rounded-full text-sm font-bold shadow-sm">
+                    {item.price}
+                  </div>
+                </div>
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-2xl font-semibold mb-2">{item.name}</h3>
+                  <p className="text-muted-foreground flex-1">{item.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <Button variant="outline" size="lg" className="rounded-full px-8 border-primary/20 hover:bg-primary/5">
+              Explore Full Menu
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 container mx-auto px-4 md:px-6 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5 -z-10"></div>
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-foreground">Guest Book</h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[
+            { name: "Sarah Jennings", role: "Food Critic", review: "An absolute masterclass in flavors. The ambiance is unmatched and the truffle risotto is life-changing." },
+            { name: "Michael Chang", role: "Local Guide", review: "Copper Spoon sets a new standard for fine dining. Exceptional service and breathtaking presentation." },
+            { name: "Emma Wilson", role: "Regular Guest", review: "My go-to place for anniversaries. They make every moment feel special and the menu never ceases to amaze." }
+          ].map((testimonial, idx) => (
+            <div key={idx} className="relative p-8 rounded-3xl bg-background border border-border shadow-sm hover:shadow-lg transition-shadow duration-300">
+              <Quote className="absolute top-8 right-8 h-10 w-10 text-primary/10 rotate-180" />
+              <div className="flex gap-1 mb-6">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star key={star} className="h-4 w-4 fill-primary text-primary" />
+                ))}
+              </div>
+              <p className="text-lg text-muted-foreground italic mb-6 relative z-10">"{testimonial.review}"</p>
+              <div>
+                <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+                <p className="text-sm text-primary">{testimonial.role}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA / Booking Banner Section */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary z-0">
+          <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+        </div>
+        <div className="container mx-auto px-4 md:px-6 relative z-10 text-center flex flex-col items-center">
+          <h2 className="text-4xl md:text-6xl font-bold text-primary-foreground mb-6">Ready for an unforgettable evening?</h2>
+          <p className="text-primary-foreground/80 text-xl max-w-2xl mb-10">
+            Secure your table tonight and experience a culinary journey that delights the senses and warms the soul.
+          </p>
+          <Button size="lg" className="rounded-full px-10 py-7 text-lg bg-background text-primary hover:bg-background/90 shadow-2xl transition-transform hover:scale-105 duration-300">
+            Reserve Your Table Now
+          </Button>
         </div>
       </section>
     </div>
