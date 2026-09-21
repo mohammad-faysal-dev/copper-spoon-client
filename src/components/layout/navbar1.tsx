@@ -31,10 +31,7 @@ interface Navbar1Props {
 
   logo?: {
     url: string;
-    src: string;
-    alt: string;
     title: string;
-    className?: string;
   };
 
   menu?: MenuItem[];
@@ -54,8 +51,6 @@ interface Navbar1Props {
 const Navbar1 = ({
   logo = {
     url: "/",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
-    alt: "Logo",
     title: "Copper Spoon",
   },
 
@@ -64,7 +59,7 @@ const Navbar1 = ({
     { title: "Menu", url: "/menu" },
     { title: "About", url: "/about" },
     { title: "Contact", url: "/contact" },
-    { title: "provider", url: "/providers" },
+    { title: "Provider", url: "/providers" },
     { title: "Dashboard", url: "/dashboard" },
   ],
 
@@ -74,7 +69,7 @@ const Navbar1 = ({
       url: "/login",
     },
     signup: {
-      title: "Sign up",
+      title: "Sign Up",
       url: "/signup",
     },
   },
@@ -82,32 +77,38 @@ const Navbar1 = ({
   className,
 }: Navbar1Props) => {
   return (
-    <header className={cn("sticky top-0 z-50 border-b border-border/80 bg-background/80 backdrop-blur-xl", className)}>
-      <div className="container mx-auto px-4 md:px-6 lg:px-8">
-        <nav className="hidden items-center justify-between py-4 lg:flex">
-          <div className="flex items-center gap-10">
+    <header
+      className={cn(
+        "sticky top-2 sm:top-4 z-50 mx-auto w-[95%] max-w-7xl rounded-2xl sm:rounded-full border border-border/40 bg-background/60 backdrop-blur-xl shadow-lg shadow-black/5 dark:shadow-black/20 transition-all",
+        className
+      )}
+    >
+      <div className="px-4 md:px-6 lg:px-8">
+        {/* Desktop Nav */}
+        <nav className="hidden items-center justify-between py-3 lg:flex">
+          <div className="flex items-center gap-8 xl:gap-12">
             <a href={logo.url} className="group flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-lg font-bold text-primary-foreground shadow-sm shadow-primary/20 transition-transform duration-200 group-hover:scale-105">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-lg font-bold text-primary-foreground shadow-md transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110">
                 C
               </div>
 
-              <div className="leading-none">
-                <span className="block text-lg font-semibold tracking-tight text-foreground">
+              <div className="leading-none flex flex-col justify-center">
+                <span className="block text-lg font-bold tracking-tight text-foreground transition-colors group-hover:text-primary">
                   {logo.title}
                 </span>
-                <span className="mt-1 block text-[10px] font-medium uppercase tracking-[0.28em] text-muted-foreground">
+                <span className="mt-0.5 block text-[9px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">
                   Kitchen & Co.
                 </span>
               </div>
             </a>
 
             <NavigationMenu>
-              <NavigationMenuList className="gap-1">
+              <NavigationMenuList className="gap-2">
                 {menu.map((item) => (
                   <NavigationMenuItem key={item.title}>
                     <NavigationMenuLink
                       href={item.url}
-                      className="inline-flex h-10 items-center justify-center rounded-full px-4 text-sm font-medium text-muted-foreground transition-all duration-200 hover:bg-muted hover:text-foreground data-active:bg-muted data-active:text-foreground"
+                      className="inline-flex h-9 items-center justify-center rounded-full px-4 text-sm font-semibold text-muted-foreground transition-all duration-300 hover:bg-primary/10 hover:text-primary data-active:bg-primary/10 data-active:text-primary"
                     >
                       {item.title}
                     </NavigationMenuLink>
@@ -120,10 +121,12 @@ const Navbar1 = ({
           <div className="flex items-center gap-3">
             <ModeToggle />
 
+            <div className="h-6 w-[1px] bg-border/60 mx-1"></div>
+
             <Button
-              variant="outline"
+              variant="ghost"
               size="sm"
-              className="rounded-full border-border bg-background px-4 text-sm font-medium shadow-sm"
+              className="rounded-full px-5 text-sm font-bold hover:text-primary hover:bg-primary/10 transition-colors"
               render={<a href={auth.login.url} />}
               nativeButton={false}
             >
@@ -132,7 +135,7 @@ const Navbar1 = ({
 
             <Button
               size="sm"
-              className="rounded-full px-4 text-sm font-medium shadow-sm shadow-primary/20"
+              className="rounded-full px-6 text-sm font-bold shadow-md hover:scale-105 transition-transform"
               render={<a href={auth.signup.url} />}
               nativeButton={false}
             >
@@ -141,18 +144,19 @@ const Navbar1 = ({
           </div>
         </nav>
 
+        {/* Mobile Nav */}
         <div className="block py-3 lg:hidden">
           <div className="flex items-center justify-between gap-3">
             <a href={logo.url} className="group flex items-center gap-3">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary text-sm font-bold text-primary-foreground shadow-sm shadow-primary/20">
+              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-sm font-bold text-primary-foreground shadow-md">
                 C
               </div>
 
               <div className="leading-none">
-                <span className="block text-base font-semibold tracking-tight text-foreground">
+                <span className="block text-base font-bold tracking-tight text-foreground">
                   {logo.title}
                 </span>
-                <span className="mt-1 block text-[9px] uppercase tracking-[0.24em] text-muted-foreground">
+                <span className="mt-0.5 block text-[8px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">
                   Kitchen & Co.
                 </span>
               </div>
@@ -162,23 +166,23 @@ const Navbar1 = ({
               <ModeToggle />
 
               <Sheet>
-                <SheetTrigger render={<Button variant="outline" size="icon" className="rounded-full" />}>
-                  <Menu className="size-4" />
+                <SheetTrigger render={<Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/10" />}>
+                  <Menu className="size-5" />
                 </SheetTrigger>
 
-                <SheetContent side="right" className="overflow-y-auto">
-                  <SheetHeader className="mb-4">
+                <SheetContent side="right" className="w-[85vw] max-w-sm rounded-l-3xl border-border/50 bg-background/95 backdrop-blur-xl p-6">
+                  <SheetHeader className="mb-8 items-start">
                     <SheetTitle>
                       <a href={logo.url} className="flex items-center gap-3">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-base font-bold text-primary-foreground">
                           C
                         </div>
 
-                        <div className="leading-none">
-                          <span className="block text-base font-semibold tracking-tight text-foreground">
+                        <div className="leading-none text-left">
+                          <span className="block text-lg font-bold tracking-tight text-foreground">
                             {logo.title}
                           </span>
-                          <span className="mt-1 block text-[9px] uppercase tracking-[0.24em] text-muted-foreground">
+                          <span className="mt-0.5 block text-[9px] font-semibold uppercase tracking-[0.3em] text-muted-foreground">
                             Kitchen & Co.
                           </span>
                         </div>
@@ -186,23 +190,24 @@ const Navbar1 = ({
                     </SheetTitle>
                   </SheetHeader>
 
-                  <div className="flex flex-col gap-6 p-1">
-                    <nav className="flex flex-col gap-2">
+                  <div className="flex flex-col gap-8">
+                    <nav className="flex flex-col gap-3">
                       {menu.map((item) => (
                         <a
                           key={item.title}
                           href={item.url}
-                          className="rounded-xl px-3 py-2 text-base font-medium text-foreground transition-colors hover:bg-muted hover:text-primary"
+                          className="rounded-2xl px-4 py-3 text-lg font-semibold text-foreground transition-all hover:bg-primary/10 hover:text-primary"
                         >
                           {item.title}
                         </a>
                       ))}
                     </nav>
 
-                    <div className="flex flex-col gap-3 pt-2">
+                    <div className="flex flex-col gap-3 border-t border-border/50 pt-8">
                       <Button
                         variant="outline"
-                        className="rounded-full"
+                        size="lg"
+                        className="rounded-2xl border-border font-bold shadow-sm"
                         render={<a href={auth.login.url} />}
                         nativeButton={false}
                       >
@@ -210,7 +215,8 @@ const Navbar1 = ({
                       </Button>
 
                       <Button
-                        className="rounded-full"
+                        size="lg"
+                        className="rounded-2xl font-bold shadow-md"
                         render={<a href={auth.signup.url} />}
                         nativeButton={false}
                       >
