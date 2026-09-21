@@ -65,6 +65,8 @@ const Navbar1 = ({
     { title: "About", url: "/about" },
     { title: "Reservations", url: "/reservations" },
     { title: "Contact", url: "/contact" },
+    { title: "provider", url: "/providers" },
+    { title: "Dashboard", url: "/dashboard" },
   ],
 
   auth = {
