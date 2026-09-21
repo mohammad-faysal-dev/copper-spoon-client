@@ -63,7 +63,6 @@ const Navbar1 = ({
     { title: "Home", url: "/" },
     { title: "Menu", url: "/menu" },
     { title: "About", url: "/about" },
-    { title: "Reservations", url: "/reservations" },
     { title: "Contact", url: "/contact" },
     { title: "provider", url: "/providers" },
     { title: "Dashboard", url: "/dashboard" },

@@ -42,7 +42,7 @@ export function SignupForm({
 
   const form = useForm({
     defaultValues: {
-      name:"",
+      name: "",
       email: "",
       password: "",
     },
@@ -250,10 +250,10 @@ export function SignupForm({
           <p className="text-center text-sm text-muted-foreground">
             Don&apos;t have an account?{" "}
             <a
-              href="/signup"
+              href="/login"
               className="font-medium text-foreground underline-offset-4 hover:underline"
             >
-              Sign up
+              Sign In
             </a>
           </p>
         </CardFooter>

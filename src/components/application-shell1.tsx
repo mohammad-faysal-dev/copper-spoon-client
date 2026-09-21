@@ -82,6 +82,38 @@ export type SidebarData = {
   footerGroup?: NavGroup;
   user?: UserData;
 };
+const defaultData: SidebarData = {
+  logo: {
+    src: "/logo.png",
+    alt: "FoodHub Logo",
+    title: "FoodHub",
+    description: "Meal Ordering",
+  },
+  navGroups: [
+    {
+      title: "Menu",
+      items: [
+        {
+          label: "Dashboard",
+          icon: User,
+          href: "/dashboard",
+          isActive: true,
+        },
+        {
+          label: "Home",
+          icon: User,
+          href: "/",
+          isActive: true,
+        },
+      ],
+    },
+  ],
+  user: {
+    name: "Mohammad Faysal",
+    email: "faysal@example.com",
+    avatar: "/default-avatar.png",
+  },
+};
 
 const SidebarLogo = ({ logo }: { logo: SidebarLogoType }) => {
   return (
@@ -267,7 +299,7 @@ export interface ApplicationShell1Props {
   data: SidebarData;
 }
 
-export function ApplicationShell1({ className, data }: ApplicationShell1Props) {
+export function ApplicationShell1({ className, data = defaultData }: ApplicationShell1Props) {
   return (
     <SidebarProvider className={cn(className)}>
       <AppSidebar data={data} />

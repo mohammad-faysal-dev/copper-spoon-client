@@ -2,9 +2,7 @@
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
-      
-
+    <div>
       <main className="container mx-auto flex min-h-[55vh] flex-col justify-center px-4 py-16 md:px-6 lg:px-8">
         <div className="max-w-2xl space-y-6">
           <span className="inline-flex rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-medium uppercase tracking-[0.2em] text-primary">
@@ -21,7 +19,7 @@ export default function Home() {
         </div>
       </main>
 
-     
+
     </div>
   );
 }

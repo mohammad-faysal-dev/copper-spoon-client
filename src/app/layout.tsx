@@ -3,8 +3,6 @@ import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
-import { Navbar1 } from "@/components/layout/navbar1";
-import Footer from "@/components/layout/Footer";
 
 const inter = Inter({
   variable: "--font-body",
@@ -40,9 +38,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           enableSystem
           disableTransitionOnChange
         >
-          <Navbar1></Navbar1>
+
           {children}
-          <Footer></Footer>
+
           <Toaster richColors />
         </ThemeProvider>
       </body>
