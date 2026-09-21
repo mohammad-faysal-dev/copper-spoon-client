@@ -51,7 +51,7 @@ const contactDetails = [
 
 export function Footer({ className }: { className?: string }) {
   return (
-    <footer className={cn("relative bg-background text-foreground overflow-hidden pt-20 pb-10 border-t-4 border-primary", className)}>
+    <footer className={cn("relative bg-background text-foreground overflow-hidden pt-20 pb-10 border-t border-border", className)}>
       {/* Background Decorative Element */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[300px] opacity-[0.03] dark:opacity-10 pointer-events-none"
         style={{ background: "radial-gradient(ellipse at top, var(--primary) 0%, transparent 70%)" }}>
