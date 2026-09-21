@@ -17,4 +17,14 @@ export const menuService = {
       return { data: null, error: { message: "Failed to fetch " } };
     }
   },
+  getMenuById: async function (id: string) {
+    try {
+      const res = await fetch(`${API_URL}/meals/${id}`);
+      const data = await res.json();
+      return { data: data, error: null };
+    } catch (error) {
+      console.log(error);
+      return { data: null, error: { message: "Failed to fetch" } };
+    }
+  },
 };

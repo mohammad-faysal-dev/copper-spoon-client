@@ -1,17 +1,19 @@
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { menuService } from "@/services/menu.service";
 import { ChefHat, MapPin, ShoppingCart } from "lucide-react";
+import Link from "next/link";
 
 const MenuPage = async () => {
   const { data, error } = await menuService.getMenus();
-
+  console.log(data)
   if (error || !data) {
     return (
       <main className="container mx-auto px-4 py-16">
@@ -129,13 +131,17 @@ const MenuPage = async () => {
             </CardContent>
 
             <CardFooter className="gap-2">
-              <Button
-                variant="outline"
-                className="flex-1"
-                disabled={!meal.isAvailable}
+              <Link
+                href={`/menu/${meal.id}`}
+                aria-disabled={!meal.isAvailable}
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "flex-1",
+                  !meal.isAvailable && "pointer-events-none opacity-50"
+                )}
               >
                 View Details
-              </Button>
+              </Link>
 
               <Button
                 size="icon"

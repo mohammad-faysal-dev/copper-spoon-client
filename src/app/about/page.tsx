@@ -8,8 +8,6 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 
-import { Footer } from "@/components/layout/Footer";
-import { Navbar1 } from "@/components/layout/navbar1";
 
 const stats = [
   { value: "12", label: "years of crafting seasonal menus" },
@@ -47,7 +45,7 @@ const storySteps = [
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar1 />
+     
 
       <main className="container mx-auto px-4 py-12 md:px-6 lg:px-8">
         <section className="grid items-center gap-10 py-12 md:grid-cols-2 md:py-20">
@@ -243,7 +241,7 @@ export default function AboutPage() {
         </section>
       </main>
 
-      <Footer />
+    
     </div>
   );
 }

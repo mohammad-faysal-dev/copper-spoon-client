@@ -10,8 +10,6 @@ import {
   Sparkles,
 } from "lucide-react";
 
-import { Footer } from "@/components/layout/Footer";
-import { Navbar1 } from "@/components/layout/navbar1";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -64,7 +62,7 @@ const inquiryTypes = [
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar1 />
+   
 
       <main className="container mx-auto px-4 py-10 md:px-6 lg:px-8 lg:py-12">
         <section className="relative overflow-hidden rounded-[2rem] border border-border/80 bg-[radial-gradient(circle_at_top_left,rgba(217,119,6,0.15),transparent_35%),linear-gradient(135deg,rgba(17,17,17,0.98),rgba(28,25,23,0.96),rgba(120,53,15,0.9))] p-6 shadow-[0_25px_80px_rgba(0,0,0,0.18)] md:p-8 lg:p-10">
@@ -299,8 +297,6 @@ export default function ContactPage() {
           </div>
         </section>
       </main>
-
-      <Footer />
     </div>
   );
 }
