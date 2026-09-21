@@ -1,10 +1,9 @@
-import { Footer } from "@/components/layout/Footer";
-import { Navbar1 } from "@/components/layout/navbar1";
+
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <Navbar1 />
+      
 
       <main className="container mx-auto flex min-h-[55vh] flex-col justify-center px-4 py-16 md:px-6 lg:px-8">
         <div className="max-w-2xl space-y-6">
@@ -22,7 +21,7 @@ export default function Home() {
         </div>
       </main>
 
-      <Footer />
+     
     </div>
   );
 }
