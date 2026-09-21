@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { ArrowRight, Utensils, Clock, Star, MapPin, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { menuService } from "@/services/menu.service";
 
-export default function Home() {
+export default async function Home() {
+  const { data } = await menuService.getMenus()
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -107,28 +110,24 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              { name: "Truffle Risotto", price: "$32", img: "https://images.unsplash.com/photo-1633504581786-316c8002b1b9?auto=format&fit=crop&q=80&w=600", desc: "Wild mushrooms, parmesan crisp, white truffle oil." },
-              { name: "Pan-Seared Scallops", price: "$38", img: "https://images.unsplash.com/photo-1626804475297-41609ea004eb?auto=format&fit=crop&q=80&w=600", desc: "Cauliflower purée, brown butter, micro herbs." },
-              { name: "Wagyu Beef Filet", price: "$65", img: "https://images.unsplash.com/photo-1544025162-83113115456f?auto=format&fit=crop&q=80&w=600", desc: "Potato pave, asparagus, red wine reduction." }
-            ].map((item, idx) => (
-              <div key={idx} className="group flex flex-col bg-card rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 border border-border">
+            {data?.slice(3, 6).map((item: any, idx: number) => (
+              <div key={item.id || idx} className="group flex flex-col bg-card rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 border border-border">
                 <div className="relative h-64 overflow-hidden">
-                  <img src={item.img} alt={item.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                  <img src={item.image || ""} alt={item.name || ""} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                   <div className="absolute top-4 right-4 bg-background/80 backdrop-blur-md px-3 py-1 rounded-full text-sm font-bold shadow-sm">
                     {item.price}
                   </div>
                 </div>
                 <div className="p-6 flex flex-col flex-1">
                   <h3 className="text-2xl font-semibold mb-2">{item.name}</h3>
-                  <p className="text-muted-foreground flex-1">{item.desc}</p>
+                  <p className="text-muted-foreground flex-1">{item.description}</p>
                 </div>
               </div>
             ))}
           </div>
           <div className="mt-12 text-center">
             <Button variant="outline" size="lg" className="rounded-full px-8 border-primary/20 hover:bg-primary/5">
-              Explore Full Menu
+              <Link href="/menu">Explore Full Menu</Link >
             </Button>
           </div>
         </div>

@@ -52,141 +52,135 @@ const MenuDetailsPage = async ({
   const meal = data;
 
   return (
-    <main className="container mx-auto px-4 py-10 md:py-14">
-      {/* Back Link */}
-      <Link
-        href="/menu"
-        className="mb-6 inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
-      >
-        <ArrowLeft className="size-4" />
-        Back to Menu
-      </Link>
+    <div className="min-h-screen bg-muted/20 text-foreground pt-10">
+      <main className="container mx-auto px-4 pb-14 max-w-7xl">
+        {/* Back Link */}
+        <Link
+          href="/menu"
+          className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+        >
+          <ArrowLeft className="size-4" />
+          Back to Menu
+        </Link>
 
-      <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
-        {/* Meal Image */}
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl bg-muted shadow-sm">
-          {meal.image ? (
-            <img
-              src={meal.image}
-              alt={meal.name}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full flex-col items-center justify-center gap-2 text-muted-foreground/50">
-              <ImageOff className="size-10" />
-              <span className="text-sm">No image available</span>
-            </div>
-          )}
+        {/* Main Details Card */}
+        <div className="rounded-3xl bg-card border border-border/50 shadow-sm overflow-hidden">
+          <div className="grid gap-0 lg:grid-cols-2">
 
-          {meal.image && (
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-          )}
+            {/* Image Section */}
+            <div className="relative h-[350px] lg:h-full w-full bg-muted/50">
+              {meal.image ? (
+                <img
+                  src={meal.image}
+                  alt={meal.name}
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-3 text-muted-foreground/40">
+                  <ImageOff className="size-16 opacity-30" />
+                  <span className="text-sm font-medium">No image available</span>
+                </div>
+              )}
 
-          {/* Availability Badge */}
-          <div className="absolute left-4 top-4">
-            {meal.isAvailable ? (
-              <Badge className="bg-green-600 text-white shadow hover:bg-green-600">
-                Available
-              </Badge>
-            ) : (
-              <Badge variant="destructive" className="shadow">
-                Unavailable
-              </Badge>
-            )}
-          </div>
-
-          {/* Dietary Badge */}
-          {meal.dietary && (
-            <div className="absolute right-4 top-4">
-              <Badge variant="secondary" className="gap-1 shadow">
-                <Leaf className="size-3" />
-                {meal.dietary}
-              </Badge>
-            </div>
-          )}
-        </div>
-
-        {/* Meal Details */}
-        <div className="flex flex-col">
-          {/* Cuisine & Category */}
-          <div className="flex flex-wrap items-center gap-2">
-            {meal.cuisine && (
-              <Badge variant="outline">
-                {meal.cuisine} Cuisine
-              </Badge>
-            )}
-
-            {meal.category?.name && (
-              <Badge variant="outline">
-                {meal.category.name}
-              </Badge>
-            )}
-          </div>
-
-          {/* Meal Name */}
-          <h1 className="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
-            {meal.name}
-          </h1>
-
-          {/* Description */}
-          {meal.description && (
-            <p className="mt-4 leading-relaxed text-muted-foreground">
-              {meal.description}
-            </p>
-          )}
-
-          <Separator className="my-6" />
-
-          {/* Provider */}
-          {meal.provider && (
-            <div className="flex items-center gap-3 rounded-2xl border bg-muted/30 p-4">
-              <div className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary/10">
-                <ChefHat className="size-5 text-primary" />
-              </div>
-
-              <div className="min-w-0">
-                <p className="font-medium">
-                  {meal.provider.restaurantName}
-                </p>
-
-                {meal.provider.address && (
-                  <div className="mt-0.5 flex items-center gap-1 text-xs text-muted-foreground">
-                    <MapPin className="size-3 shrink-0" />
-                    <span className="truncate">
-                      {meal.provider.address}
-                    </span>
-                  </div>
+              {/* Status Badges */}
+              <div className="absolute left-5 top-5 z-10 flex flex-wrap gap-2">
+                {meal.isAvailable ? (
+                  <Badge className="bg-green-600 hover:bg-green-700 text-white border-none shadow-sm font-medium px-3 py-1">
+                    Available
+                  </Badge>
+                ) : (
+                  <Badge variant="destructive" className="border-none shadow-sm font-medium px-3 py-1">
+                    Sold Out
+                  </Badge>
+                )}
+                {meal.dietary && (
+                  <Badge variant="secondary" className="bg-background/95 text-foreground border border-border shadow-sm font-medium px-3 py-1 flex items-center gap-1.5">
+                    <Leaf className="size-3 text-green-500" />
+                    {meal.dietary}
+                  </Badge>
                 )}
               </div>
             </div>
-          )}
 
-          <Separator className="my-6" />
+            {/* Content Section */}
+            <div className="flex flex-col p-8 lg:p-10">
+              {/* Category & Cuisine */}
+              <div className="flex flex-wrap items-center gap-2 mb-4">
+                {meal.cuisine && (
+                  <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5 font-medium">
+                    <UtensilsCrossed className="size-3 mr-1.5" />
+                    {meal.cuisine} Cuisine
+                  </Badge>
+                )}
+                {meal.category?.name && (
+                  <Badge variant="secondary" className="font-medium text-foreground/80">
+                    {meal.category.name}
+                  </Badge>
+                )}
+              </div>
 
-          {/* Price & Add To Cart */}
-          <div className="mt-auto flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm text-muted-foreground">
-                Price
-              </p>
+              <h1 className="text-3xl font-extrabold tracking-tight md:text-4xl text-foreground mb-4">
+                {meal.name}
+              </h1>
 
-              <p className="text-3xl font-bold text-primary">
-                ৳{meal.price}
-              </p>
+              {meal.description && (
+                <p className="text-base leading-relaxed text-muted-foreground">
+                  {meal.description}
+                </p>
+              )}
+
+              <Separator className="my-8" />
+
+              {/* Provider Info */}
+              {meal.provider && (
+                <div className="flex items-center gap-4">
+                  <div className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                    <ChefHat className="size-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-semibold text-muted-foreground mb-0.5">
+                      Prepared By
+                    </p>
+                    <p className="font-bold text-base text-foreground truncate">
+                      {meal.provider.restaurantName}
+                    </p>
+                    {meal.provider.address && (
+                      <div className="mt-0.5 flex items-center gap-1 text-sm text-muted-foreground">
+                        <MapPin className="size-3.5 shrink-0" />
+                        <span className="truncate">{meal.provider.address}</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className="flex-grow"></div>
+
+              {/* Action Section */}
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div className="w-full sm:w-auto text-center sm:text-left">
+                  <p className="text-sm font-medium text-muted-foreground mb-1">
+                    Price
+                  </p>
+                  <p className="text-3xl font-bold text-foreground">
+                    ৳{meal.price}
+                  </p>
+                </div>
+
+                <Button
+                  size="lg"
+                  disabled={!meal.isAvailable}
+                  className="w-full sm:w-auto h-14 rounded-xl px-8 text-base font-semibold shadow-md focus:scale-95 transition-transform"
+                >
+                  <ShoppingCart className="size-5 mr-2" />
+                  {meal.isAvailable ? "Add to Cart" : "Unavailable"}
+                </Button>
+              </div>
             </div>
-
-            <Button
-              size="lg"
-              disabled={!meal.isAvailable}
-              className="flex-1 gap-2 sm:flex-none sm:px-10"
-            >
-              <ShoppingCart className="size-5" />
-              {meal.isAvailable ? "Add to Cart" : "Unavailable"}
-            </Button>
           </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </div>
   );
 };
 

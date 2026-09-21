@@ -72,106 +72,100 @@ const MenuPage = async () => {
             {data.map((meal: any) => (
               <div
                 key={meal.id}
-                className="group relative flex flex-col rounded-[2rem] bg-card border border-border shadow-sm hover:shadow-2xl transition-all duration-500 overflow-hidden"
+                className="group flex flex-col rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
               >
-                {/* Image */}
+                {/* Image Section */}
                 <div className="relative h-56 overflow-hidden bg-muted">
-                  <img
-                    src={meal.image}
-                    alt={meal.name}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60"></div>
+                  {meal.image ? (
+                    <img
+                      src={meal.image}
+                      alt={meal.name}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-muted-foreground/30">
+                      <ChefHat className="size-12" />
+                    </div>
+                  )}
 
-                  {/* Availability */}
-                  <div className="absolute left-4 top-4">
+                  {/* Top Badges */}
+                  <div className="absolute left-3 top-3 flex flex-wrap gap-2">
                     {meal.isAvailable ? (
-                      <Badge className="bg-primary/90 text-primary-foreground backdrop-blur-md border-none shadow-sm hover:bg-primary">
+                      <Badge className="bg-green-600 hover:bg-green-700 text-white border-none shadow-sm font-medium">
                         Available
                       </Badge>
                     ) : (
-                      <Badge variant="destructive" className="backdrop-blur-md opacity-90 shadow-sm border-none">
+                      <Badge variant="destructive" className="border-none shadow-sm font-medium">
                         Sold Out
                       </Badge>
                     )}
-                  </div>
-
-                  {/* Dietary */}
-                  {meal.dietary && (
-                    <div className="absolute right-4 top-4">
-                      <Badge variant="secondary" className="bg-background/80 backdrop-blur-md border-border shadow-sm">
+                    {meal.dietary && (
+                      <Badge variant="secondary" className="bg-background/95 text-foreground border border-border shadow-sm font-medium">
                         {meal.dietary}
                       </Badge>
-                    </div>
-                  )}
-
-                  <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur-md px-3 py-1.5 rounded-full shadow-lg border border-border">
-                    <span className="text-lg font-bold text-foreground">৳{meal.price}</span>
+                    )}
                   </div>
                 </div>
 
-                {/* Content */}
-                <div className="flex flex-1 flex-col p-6">
-                  <div className="mb-2">
-                    <h2 className="line-clamp-1 text-xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
-                      {meal.name}
-                    </h2>
-                    <p className="mt-1 text-xs font-semibold uppercase tracking-wider text-primary">
-                      {meal.cuisine} Cuisine
-                    </p>
-                  </div>
-
-                  <p className="line-clamp-2 text-sm text-muted-foreground mb-6 flex-1">
-                    {meal.description}
-                  </p>
-
-                  {/* Provider Info */}
-                  <div className="mb-6 rounded-2xl bg-muted/50 p-4 border border-border/50">
-                    <div className="flex items-center gap-3">
-                      <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                        <ChefHat className="h-5 w-5" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="truncate text-sm font-bold text-foreground">
-                          {meal.provider?.restaurantName || "Copper Spoon Kitchen"}
-                        </p>
-                        {meal.provider?.address && (
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground mt-0.5">
-                            <MapPin className="h-3 w-3 shrink-0" />
-                            <span className="truncate">{meal.provider.address}</span>
-                          </div>
+                {/* Content Section */}
+                <div className="flex flex-1 flex-col p-5">
+                  <div className="flex items-start justify-between gap-4 mb-2">
+                    <div className="min-w-0">
+                      <h2 className="truncate text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                        {meal.name}
+                      </h2>
+                      <div className="flex items-center gap-1.5 mt-1 text-xs text-muted-foreground font-medium truncate">
+                        <span className="text-primary truncate">{meal.cuisine} Cuisine</span>
+                        {meal.category?.name && (
+                          <>
+                            <span className="shrink-0">•</span>
+                            <span className="truncate">{meal.category.name}</span>
+                          </>
                         )}
                       </div>
                     </div>
+                    <span className="text-xl font-bold text-foreground shrink-0">
+                      ৳{meal.price}
+                    </span>
                   </div>
 
-                  {/* Category */}
-                  {meal.category?.name && (
-                    <div className="mb-6 flex items-center justify-between text-xs font-medium border-t border-border pt-4">
-                      <span className="text-muted-foreground">Category</span>
-                      <span className="text-foreground">{meal.category.name}</span>
+                  <p className="line-clamp-2 text-sm text-muted-foreground mb-5 flex-1 leading-relaxed">
+                    {meal.description}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-border/50">
+                    {/* Provider Info */}
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                        <ChefHat className="h-4 w-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <p className="truncate text-xs font-semibold text-foreground">
+                          {meal.provider?.restaurantName || "Copper Spoon Kitchen"}
+                        </p>
+                      </div>
                     </div>
-                  )}
+                  </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-3 mt-auto">
+                  <div className="flex items-center gap-3 mt-5">
                     <Link
                       href={`/menu/${meal.id}`}
                       className={cn(
                         buttonVariants({ variant: "outline" }),
-                        "flex-1 h-12 rounded-xl border-border bg-transparent hover:bg-muted font-semibold transition-colors",
+                        "flex-1 h-10 rounded-xl border-border bg-background hover:bg-muted font-medium transition-colors text-sm",
                         !meal.isAvailable && "pointer-events-none opacity-50"
                       )}
                     >
-                      Details
+                      View Details
                     </Link>
                     <Button
                       size="icon"
-                      className="h-12 w-12 rounded-xl bg-primary text-primary-foreground hover:scale-105 transition-transform shadow-md"
+                      className="h-10 w-10 shrink-0 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm focus:scale-95"
                       disabled={!meal.isAvailable}
                       aria-label={`Add ${meal.name} to cart`}
                     >
-                      <ShoppingCart className="h-5 w-5" />
+                      <ShoppingCart className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
