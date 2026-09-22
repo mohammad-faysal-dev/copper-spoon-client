@@ -91,15 +91,15 @@ const SidebarLogo = ({ logo }: { logo: SidebarLogoType }) => {
         <SidebarMenuButton size="lg">
           <div className="flex aspect-square size-8 items-center justify-center rounded-sm bg-primary">
             <img
-              src={logo.src}
-              alt={logo.alt}
+              src={logo?.src}
+              alt={logo?.alt}
               className="size-6 text-primary-foreground invert dark:invert-0"
             />
           </div>
           <div className="flex flex-col gap-0.5 leading-none">
-            <span className="font-medium">{logo.title}</span>
+            <span className="font-medium">{logo?.title}</span>
             <span className="text-xs text-muted-foreground">
-              {logo.description}
+              {logo?.description}
             </span>
           </div>
         </SidebarMenuButton>
@@ -283,12 +283,12 @@ export function ApplicationShell1({ className, data, children }: ApplicationShel
           <a href="#" className="flex items-center gap-2 md:hidden">
             <div className="flex aspect-square size-8 items-center justify-center rounded-sm bg-primary">
               <img
-                src={data.logo.src}
-                alt={data.logo.alt}
+                src={data?.logo.src}
+                alt={data?.logo.alt}
                 className="size-6 text-primary-foreground invert dark:invert-0"
               />
             </div>
-            <span className="font-semibold">{data.logo.title}</span>
+            <span className="font-semibold">{data?.logo.title}</span>
           </a>
           <Breadcrumb className="hidden md:block">
             <BreadcrumbList>
