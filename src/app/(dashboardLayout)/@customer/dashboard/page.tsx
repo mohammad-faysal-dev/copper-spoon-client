@@ -9,35 +9,38 @@ import {
   UserRound,
 } from "lucide-react";
 
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
-const CustomerDashboard = () => {
+const CustomerDashboardPage = () => {
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <p className="text-sm font-medium text-primary">Customer Dashboard</p>
+      <section className="mb-8">
+        <p className="text-sm font-medium text-primary">
+          Customer Dashboard
+        </p>
 
-        <h1 className="mt-1 text-3xl font-bold tracking-tight">
+        <h1 className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">
           Welcome back! 👋
         </h1>
 
         <p className="mt-2 text-muted-foreground">
-          Manage your orders, cart, profile and discover delicious meals.
+          Manage your orders, cart, and profile from one place.
         </p>
-      </div>
+      </section>
 
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <Package className="h-7 w-7 text-primary" />
+              <Package className="h-6 w-6 text-primary" />
               <span className="text-2xl font-bold">0</span>
             </div>
 
             <h2 className="mt-4 font-semibold">Total Orders</h2>
+
             <p className="mt-1 text-sm text-muted-foreground">
-              Your completed orders
+              All your orders
             </p>
           </CardContent>
         </Card>
@@ -45,11 +48,12 @@ const CustomerDashboard = () => {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <Clock3 className="h-7 w-7 text-primary" />
+              <Clock3 className="h-6 w-6 text-primary" />
               <span className="text-2xl font-bold">0</span>
             </div>
 
             <h2 className="mt-4 font-semibold">Active Orders</h2>
+
             <p className="mt-1 text-sm text-muted-foreground">
               Currently processing
             </p>
@@ -59,13 +63,14 @@ const CustomerDashboard = () => {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <ShoppingCart className="h-7 w-7 text-primary" />
+              <ShoppingCart className="h-6 w-6 text-primary" />
               <span className="text-2xl font-bold">0</span>
             </div>
 
             <h2 className="mt-4 font-semibold">Cart Items</h2>
+
             <p className="mt-1 text-sm text-muted-foreground">
-              Items waiting for checkout
+              Items in your cart
             </p>
           </CardContent>
         </Card>
@@ -73,69 +78,66 @@ const CustomerDashboard = () => {
         <Card>
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
-              <UserRound className="h-7 w-7 text-primary" />
-              <span className="text-sm font-medium">Active</span>
+              <UserRound className="h-6 w-6 text-primary" />
+              <span className="text-sm font-medium text-green-600">
+                Active
+              </span>
             </div>
 
             <h2 className="mt-4 font-semibold">My Profile</h2>
+
             <p className="mt-1 text-sm text-muted-foreground">
-              Manage your account
+              Manage your information
             </p>
           </CardContent>
         </Card>
-      </div>
+      </section>
 
-      <div className="mt-8 grid gap-6 md:grid-cols-2">
+      <section className="mt-8 grid gap-6 md:grid-cols-2">
         <Card>
           <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-primary/10 p-3">
-                <ShoppingCart className="h-5 w-5 text-primary" />
-              </div>
+            <ShoppingCart className="h-8 w-8 text-primary" />
 
-              <div>
-                <h2 className="font-semibold">Ready to order?</h2>
-                <p className="text-sm text-muted-foreground">
-                  Explore our delicious meals.
-                </p>
-              </div>
-            </div>
+            <h2 className="mt-4 text-xl font-semibold">
+              Hungry for something delicious?
+            </h2>
 
-            <Link href="/menu">
-              <Button className="mt-5">
+            <p className="mt-2 text-sm text-muted-foreground">
+              Explore our menu and find your favorite meals.
+            </p>
+
+            <Button asChild className="mt-5">
+              <Link href="/menu">
                 Explore Menu
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </CardContent>
         </Card>
 
         <Card>
           <CardContent className="p-6">
-            <div className="flex items-center gap-3">
-              <div className="rounded-lg bg-primary/10 p-3">
-                <Package className="h-5 w-5 text-primary" />
-              </div>
+            <Package className="h-8 w-8 text-primary" />
 
-              <div>
-                <h2 className="font-semibold">Track your orders</h2>
-                <p className="text-sm text-muted-foreground">
-                  Check your recent order status.
-                </p>
-              </div>
-            </div>
+            <h2 className="mt-4 text-xl font-semibold">
+              Track your orders
+            </h2>
 
-            <Link href="/dashboard/orders">
-              <Button variant="outline" className="mt-5">
+            <p className="mt-2 text-sm text-muted-foreground">
+              Check your recent orders and delivery status.
+            </p>
+
+            <Button asChild variant="outline" className="mt-5">
+              <Link href="/dashboard/orders">
                 View Orders
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </CardContent>
         </Card>
-      </div>
+      </section>
     </main>
   );
 };
 
-export default CustomerDashboard;
+export default CustomerDashboardPage;
