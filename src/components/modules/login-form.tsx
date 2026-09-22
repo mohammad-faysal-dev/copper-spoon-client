@@ -2,14 +2,6 @@
 import { cn } from "cn";
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   Field,
   FieldError,
   FieldGroup,
@@ -22,6 +14,7 @@ import { toast } from "sonner";
 import { authClient } from "@/lib/auth";
 import { Button } from "../ui/button";
 import { Mail, Lock, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   email: z.email(),
@@ -32,6 +25,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
   const handleGoogleLogin = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
@@ -48,15 +42,19 @@ export function LoginForm({
       onSubmit: formSchema,
     },
     onSubmit: async ({ value }) => {
-      const toastId = toast.loading("user logged in");
+      const toastId = toast.loading("Signing in...");
       try {
         const { data, error } = await authClient.signIn.email(value);
+        console.log(data);
         if (error) {
           toast.error(error.message, { id: toastId });
+          return;
         }
         toast.success("User Created Successfully", { id: toastId });
+        router.push("/");
+        router.refresh();
       } catch (err) {
-        toast.error("Something went wrong, please try again");
+        toast.error("Something went wrong, please try again", { id: toastId });
       }
     },
   });
@@ -64,13 +62,7 @@ export function LoginForm({
   const isSubmitting = form.state.isSubmitting;
 
   return (
-    <div
-      className={cn(
-        "flex w-full flex-col gap-6",
-        className
-      )}
-      {...props}
-    >
+    <div className={cn("flex w-full flex-col gap-6", className)} {...props}>
       <form
         id="login-form"
         className="flex flex-col gap-6"
@@ -87,7 +79,12 @@ export function LoginForm({
                 field.state.meta.isTouched && !field.state.meta.isValid;
               return (
                 <Field data-invalid={isInvalid}>
-                  <FieldLabel htmlFor={field.name} className="font-semibold mb-1 block">Email</FieldLabel>
+                  <FieldLabel
+                    htmlFor={field.name}
+                    className="font-semibold mb-1 block"
+                  >
+                    Email
+                  </FieldLabel>
                   <div className="relative">
                     <Mail className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
                     <Input
@@ -103,9 +100,7 @@ export function LoginForm({
                       className="pl-10 h-12 rounded-xl bg-muted/50 border-transparent focus:border-primary focus:bg-background transition-colors"
                     />
                   </div>
-                  {isInvalid && (
-                    <FieldError errors={field.state.meta.errors} />
-                  )}
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
               );
             }}
@@ -118,7 +113,12 @@ export function LoginForm({
               return (
                 <Field data-invalid={isInvalid}>
                   <div className="flex items-center justify-between mb-1">
-                    <FieldLabel htmlFor={field.name} className="font-semibold block">Password</FieldLabel>
+                    <FieldLabel
+                      htmlFor={field.name}
+                      className="font-semibold block"
+                    >
+                      Password
+                    </FieldLabel>
                     <a
                       href="#"
                       className="text-sm font-medium text-primary hover:underline hover:underline-offset-4"
@@ -141,9 +141,7 @@ export function LoginForm({
                       className="pl-10 h-12 rounded-xl bg-muted/50 border-transparent focus:border-primary focus:bg-background transition-colors"
                     />
                   </div>
-                  {isInvalid && (
-                    <FieldError errors={field.state.meta.errors} />
-                  )}
+                  {isInvalid && <FieldError errors={field.state.meta.errors} />}
                 </Field>
               );
             }}

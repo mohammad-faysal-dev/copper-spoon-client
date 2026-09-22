@@ -1,25 +1,37 @@
-import { ApplicationShell1 } from "@/components/layout/application-shell1";
+import {
+  AppSidebar,
+} from "@/components/layout/application-shell1";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Roles } from "@/constant/roles";
+import { userService } from "@/services/user.service";
 
 export default async function DashboardLayout({
-    children,
-    admin,
-    customer,
-    provider,
+  children,
+  admin,
+  customer,
+  provider,
 }: {
-    children: React.ReactNode;
-    admin: React.ReactNode;
-    customer: React.ReactNode;
-    provider: React.ReactNode;
+  children: React.ReactNode;
+  admin: React.ReactNode;
+  customer: React.ReactNode;
+  provider: React.ReactNode;
 }) {
-    // TODO: Replace with real role check from Better Auth
-    const role: string = "customer";
+  const { data } = await userService.getSession();
+  console.log("data", data);
+  const userInfo = data.user;
 
-    return (
-        <ApplicationShell1>
-            {role === "admin" && admin}
-            {role === "customer" && customer}
-            {role === "provider" && provider} {/* Make sure the role matches your logic */}
-            {children}
-        </ApplicationShell1>
-    );
+  return (
+    <SidebarProvider>
+      <AppSidebar data={userInfo}>
+        <main className="flex-1 p-4">
+          <SidebarTrigger />
+          <div>
+            {userInfo.role === Roles.admin && admin}
+            {userInfo.role === Roles.customer && customer}
+            {userInfo.role === Roles.provider && provider}
+          </div>
+        </main>
+      </AppSidebar>
+    </SidebarProvider>
+  );
 }

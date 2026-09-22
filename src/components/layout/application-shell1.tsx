@@ -233,7 +233,7 @@ interface AppSidebarProps extends React.ComponentProps<typeof Sidebar> {
   data: SidebarData;
 }
 
-const AppSidebar = ({ data, ...props }: AppSidebarProps) => {
+export const AppSidebar = ({ data, ...props }: AppSidebarProps) => {
   return (
     <Sidebar {...props}>
       <SidebarHeader>

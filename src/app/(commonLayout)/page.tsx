@@ -2,9 +2,12 @@ import Link from "next/link";
 import { ArrowRight, Utensils, Clock, Star, MapPin, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { menuService } from "@/services/menu.service";
+import { userService } from "@/services/user.service";
 
 export default async function Home() {
   const { data } = await menuService.getMenus()
+  const{data:session} = await userService.getSession()
+  console.log(session)
 
   return (
     <div className="min-h-screen bg-background">
