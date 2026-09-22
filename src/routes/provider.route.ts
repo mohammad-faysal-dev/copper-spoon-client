@@ -1,4 +1,5 @@
 import { Route } from "@/types/routes.type";
+import { Utensils } from "lucide-react";
 
 export const providerRoutes:Route[]=[
   {
@@ -7,6 +8,7 @@ export const providerRoutes:Route[]=[
      {
          title: "Menu",
         url: "/menu",
+        icon: Utensils,
      }
     ]
   }

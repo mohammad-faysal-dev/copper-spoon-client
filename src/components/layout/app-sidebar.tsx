@@ -42,8 +42,8 @@ export function AppSidebar({ user }: AppSidebarProps) {
               {route.items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton>
-                    <Link href={item.url}>
-                      {/* <item.icon className="size-4" /> */}
+                    <Link className="flex items-center gap-2" href={item.url}>
+                      <item.icon className="size-4" />
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
