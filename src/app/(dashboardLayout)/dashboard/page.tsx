@@ -1,4 +1,4 @@
-import { ApplicationShell1 } from "@/components/application-shell1";
+import { ApplicationShell1 } from "@/components/layout/application-shell1";
 
 export default function DashboardPage() {
     return <ApplicationShell1 />;

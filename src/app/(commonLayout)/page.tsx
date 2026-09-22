@@ -41,10 +41,10 @@ export default async function Home() {
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
               <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-lg border-white/20 text-white hover:bg-white/10 transition-all duration-300 bg-black/20 backdrop-blur-sm">
-                View Menu
+                <Link href="/menu">View Menu</Link>
               </Button>
             </div>
-          </div>
+          </div> 
         </div>
 
         {/* Decorative elements */}
