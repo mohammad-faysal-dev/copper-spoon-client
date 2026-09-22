@@ -1,12 +1,10 @@
-import {
-  AppSidebar,
-} from "@/components/layout/application-shell1";
+
+import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Roles } from "@/constant/roles";
 import { userService } from "@/services/user.service";
 
 export default async function DashboardLayout({
-  children,
   admin,
   customer,
   provider,
@@ -22,7 +20,7 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <AppSidebar data={userInfo}>
+      <AppSidebar user={userInfo}>
         <main className="flex-1 p-4">
           <SidebarTrigger />
           <div>
