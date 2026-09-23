@@ -6,15 +6,12 @@ import { Save, UserRound } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { userService } from "@/services/user.service";
+import { userClientService } from "@/services/user-client.service";
 
 const profileSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -32,6 +29,7 @@ const profileSchema = z.object({
 
 type ProfileFormProps = {
   user: {
+    id: string;
     name: string;
     email: string;
     phone: string;
@@ -56,7 +54,20 @@ export default function ProfileForm({ user }: ProfileFormProps) {
       const toastId = toast.loading("Saving changes...");
 
       try {
+        const { data, error } = await userClientService.updateUser(user.id, {
+          name: value.name,
+          phone: value.phone,
+          address: value.address,
+        });
+        console.log("DATA:", data);
+        console.log("ERROR:", error);
 
+        if (error) {
+          toast.error(error.message, {
+            id: toastId,
+          });
+          return;
+        }
         toast.success("Profile updated successfully", {
           id: toastId,
         });
@@ -109,8 +120,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
               name="name"
               validators={{
                 onChange: ({ value }) => {
-                  const result =
-                    profileSchema.shape.name.safeParse(value);
+                  const result = profileSchema.shape.name.safeParse(value);
 
                   return result.success
                     ? undefined
@@ -145,8 +155,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
               name="email"
               validators={{
                 onChange: ({ value }) => {
-                  const result =
-                    profileSchema.shape.email.safeParse(value);
+                  const result = profileSchema.shape.email.safeParse(value);
 
                   return result.success
                     ? undefined
@@ -178,8 +187,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
               name="phone"
               validators={{
                 onChange: ({ value }) => {
-                  const result =
-                    profileSchema.shape.phone.safeParse(value);
+                  const result = profileSchema.shape.phone.safeParse(value);
 
                   return result.success
                     ? undefined
@@ -215,8 +223,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
               name="address"
               validators={{
                 onChange: ({ value }) => {
-                  const result =
-                    profileSchema.shape.address.safeParse(value);
+                  const result = profileSchema.shape.address.safeParse(value);
 
                   return result.success
                     ? undefined

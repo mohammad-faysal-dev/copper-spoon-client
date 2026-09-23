@@ -6,6 +6,7 @@ export default async function profilePage() {
   return (
     <ProfileForm
       user={{
+        id: data.user.id,
         name: data.user.name ?? "",
         email: data.user.email ?? "",
         phone: data.user.phone ?? "",
