@@ -34,7 +34,10 @@ export const orderService = {
       return { data: null, error: { message: "Failed to create order" } };
     }
   },
-  getMyOrders: async function () {
+  getMyOrders: async function (): Promise<{
+    data: Order[] | null;
+    error: { message: string } | null;
+  }> {
     try {
       const res = await fetch(`${API_URL}/orders/my-orders`, {
         method: "GET",
@@ -54,7 +57,9 @@ export const orderService = {
       return { data: null, error: { message: "Failed to get order" } };
     }
   },
-  getOrderById: async function (orderId: string) {
+  getOrderById: async function (
+    orderId: string,
+  ): Promise<{ data: Order | null; error: { message: string } | null }> {
     try {
       const res = await fetch(`${API_URL}/orders/${orderId}`, {
         method: "GET",
@@ -109,6 +114,37 @@ export const orderService = {
         data: null,
         error: {
           message: "Failed to update order status",
+        },
+      };
+    }
+  },
+  getAllOrders: async function (): Promise<{
+    data: Order[] | null;
+    error: { message: string } | null;
+  }> {
+    try {
+      const res = await fetch(`${API_URL}/orders`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        return {
+          data: null,
+          error: {
+            message: result?.message || "Failed to fetch orders",
+          },
+        };
+      }
+      return {
+        data: result?.data ?? result,
+        error: null,
+      };
+    } catch (err) {
+      return {
+        data: null,
+        error: {
+          message: "Failed to fetch order",
         },
       };
     }
