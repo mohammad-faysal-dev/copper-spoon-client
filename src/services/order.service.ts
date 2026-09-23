@@ -54,4 +54,29 @@ export const orderService = {
       return { data: null, error: { message: "Failed to get order" } };
     }
   },
+  getOrderById: async function () {
+    try {
+      const res = await fetch(`${API_URL}/orders/$orderId}`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        return {
+          data: null,
+          error: {
+            message: "Failed to fetch order",
+          },
+        };
+      }
+      return { data: result, error: null };
+    } catch (err) {
+      return {
+        data: null,
+        error: {
+          message: "Failed to fetch order",
+        },
+      };
+    }
+  },
 };
