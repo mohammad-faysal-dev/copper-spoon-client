@@ -59,4 +59,35 @@ export const providerService = {
       };
     }
   },
+  getMyProfile: async function (
+    providerId: string,
+  ): Promise<{ data: Provider | null; error: { message: string } | null }> {
+    try {
+      const res = await fetch(`${API_URL}/provider/${providerId}`, {
+        method: "GET",
+        credentials: "include",
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        return {
+          data: null,
+          error: {
+            message: result?.message || "Failed to fetch provider profile",
+          },
+        };
+      }
+
+      return {
+        data: result?.data ?? result,
+        error: null,
+      };
+    } catch {
+      return {
+        data: null,
+        error: {
+          message: "Failed to create provider profile",
+        },
+      };
+    }
+  },
 };
