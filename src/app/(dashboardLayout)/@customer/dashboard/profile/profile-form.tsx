@@ -56,7 +56,6 @@ export default function ProfileForm({ user }: ProfileFormProps) {
       const toastId = toast.loading("Saving changes...");
 
       try {
-        console.log(value);
 
         toast.success("Profile updated successfully", {
           id: toastId,
