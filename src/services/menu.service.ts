@@ -58,4 +58,30 @@ export const menuService = {
       return { data: null, error: { message: "Failed to fetch" } };
     }
   },
+  deleteMeal: async function (
+    mealId: string,
+  ): Promise<{ data: Meal | null; error: { message: string } | null }> {
+    try {
+      const res = await fetch(`${API_URL}/meals/${mealId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        return {
+          data: null,
+          error: {
+            message: result?.message || "Failed to delete meal",
+          },
+        };
+      }
+
+      return {
+        data: result?.data ?? result,
+        error: null,
+      };
+    } catch (err) {
+      return { data: null, error: { message: "Failed to fetch" } };
+    }
+  },
 };
