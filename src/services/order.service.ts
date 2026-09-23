@@ -54,9 +54,9 @@ export const orderService = {
       return { data: null, error: { message: "Failed to get order" } };
     }
   },
-  getOrderById: async function () {
+  getOrderById: async function (orderId: string) {
     try {
-      const res = await fetch(`${API_URL}/orders/$orderId}`, {
+      const res = await fetch(`${API_URL}/orders/${orderId}`, {
         method: "GET",
         credentials: "include",
       });
@@ -75,6 +75,40 @@ export const orderService = {
         data: null,
         error: {
           message: "Failed to fetch order",
+        },
+      };
+    }
+  },
+  updateOrderStatus: async function (
+    orderId: string,
+    status: Order["status"],
+  ): Promise<{ data: Order | null; error: { message: string } | null }> {
+    try {
+      const res = await fetch(`${API_URL}/orders/${orderId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          status,
+        }),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        return {
+          data: null,
+          error: {
+            message: "Failed to fetch order",
+          },
+        };
+      }
+      return { data: result, error: null };
+    } catch (err) {
+      return {
+        data: null,
+        error: {
+          message: "Failed to update order status",
         },
       };
     }
