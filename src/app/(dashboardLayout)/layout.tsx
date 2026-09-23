@@ -5,6 +5,7 @@ import { Roles } from "@/constant/roles";
 import { userService } from "@/services/user.service";
 
 export default async function DashboardLayout({
+  children,
   admin,
   customer,
   provider,
@@ -15,7 +16,6 @@ export default async function DashboardLayout({
   provider: React.ReactNode;
 }) {
   const { data } = await userService.getSession();
-  console.log("data", data);
   const userInfo = data.user;
 
   return (
@@ -27,7 +27,9 @@ export default async function DashboardLayout({
             {userInfo.role === Roles.admin && admin}
             {userInfo.role === Roles.customer && customer}
             {userInfo.role === Roles.provider && provider}
+            {children}
           </div>
+          
         </main>
       </AppSidebar>
     </SidebarProvider>

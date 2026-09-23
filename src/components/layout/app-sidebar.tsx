@@ -19,9 +19,10 @@ type AppSidebarProps = {
   user: {
     role: string;
   };
+  children:React.ReactNode
 };
 
-export function AppSidebar({ user }: AppSidebarProps) {
+export function AppSidebar({ user ,children}: AppSidebarProps) {
   const routes =
     user.role === Roles.admin
       ? adminRoutes
@@ -32,6 +33,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
           : [];
 
   return (
+    <>
     <Sidebar>
       <SidebarContent>
         {routes.map((route) => (
@@ -54,5 +56,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
         ))}
       </SidebarContent>
     </Sidebar>
+    {children}
+    </>
   );
 }

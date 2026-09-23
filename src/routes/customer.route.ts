@@ -7,7 +7,7 @@ export const customerRoute: Route[] = [
     items: [
         {
         title: "Home",
-        url: "/",
+        url: "/dashboard",
         icon: Home,
       },
       {

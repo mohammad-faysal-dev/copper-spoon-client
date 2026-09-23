@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { authClient } from "@/lib/auth";
 import { Button } from "../ui/button";
 import { Mail, Lock, Loader2 } from "lucide-react";
+import { useRouter } from "next/router";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -33,6 +34,7 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router=useRouter()
   const handleGoogleLogin = async () => {
     const data = await authClient.signIn.social({
       provider: "google",
@@ -57,6 +59,8 @@ export function SignupForm({
           toast.error(error.message, { id: toastId });
         }
         toast.success("User Created Successfully", { id: toastId });
+        router.push("/login");
+
       } catch (err) {
         toast.error("Something went wrong, please try again");
       }
