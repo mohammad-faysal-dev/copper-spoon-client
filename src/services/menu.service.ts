@@ -1,3 +1,5 @@
+import { CreateMealPayload, Meal } from "@/types/menu.type";
+
 const API_URL = process.env.API_URL;
 console.log("API_URL:", API_URL);
 export const menuService = {
@@ -24,6 +26,35 @@ export const menuService = {
       return { data: data, error: null };
     } catch (error) {
       console.log(error);
+      return { data: null, error: { message: "Failed to fetch" } };
+    }
+  },
+  createMeal: async function (
+    payload: CreateMealPayload,
+  ): Promise<{ data: Meal | null; error: { message: string } | null }> {
+    try {
+      const res = await fetch(`${API_URL}/meals`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(payload),
+      });
+      const result = await res.json();
+      if (!res.ok) {
+        return {
+          data: null,
+          error: {
+            message: result?.message || "Failed to create meal",
+          },
+        };
+      }
+      return {
+        data: result?.data ?? result,
+        error: null,
+      };
+    } catch (err) {
       return { data: null, error: { message: "Failed to fetch" } };
     }
   },
