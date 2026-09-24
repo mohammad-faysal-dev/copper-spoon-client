@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../providers/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { CartProvider } from "@/providers/cart-provider";
 
 const inter = Inter({
   variable: "--font-body",
@@ -39,7 +40,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           disableTransitionOnChange
         >
 
-          {children}
+         <CartProvider>
+            {children}
+          </CartProvider>
 
           <Toaster richColors />
         </ThemeProvider>

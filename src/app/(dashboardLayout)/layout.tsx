@@ -2,7 +2,6 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Roles } from "@/constant/roles";
-import { CartProvider } from "@/providers/cart-provider";
 import { userService } from "@/services/user.service";
 
 export default async function DashboardLayout({
@@ -21,7 +20,7 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-       <CartProvider>
+      
       <AppSidebar user={userInfo}>
         <main className="flex-1 p-4">
           <SidebarTrigger />
@@ -34,7 +33,7 @@ export default async function DashboardLayout({
           
         </main>
       </AppSidebar>
-      </CartProvider>
+      
     </SidebarProvider>
   );
 }

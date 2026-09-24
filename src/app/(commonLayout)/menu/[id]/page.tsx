@@ -1,3 +1,4 @@
+import AddToCartButton from "@/components/modules/add-to-cart-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -167,14 +168,7 @@ const MenuDetailsPage = async ({
                   </p>
                 </div>
 
-                <Button
-                  size="lg"
-                  disabled={!meal.isAvailable}
-                  className="w-full sm:w-auto h-14 rounded-xl px-8 text-base font-semibold shadow-md focus:scale-95 transition-transform"
-                >
-                  <ShoppingCart className="size-5 mr-2" />
-                  {meal.isAvailable ? "Add to Cart" : "Unavailable"}
-                </Button>
+                <AddToCartButton meal={meal} />
               </div>
             </div>
           </div>

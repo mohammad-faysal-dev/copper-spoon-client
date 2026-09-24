@@ -1,3 +1,4 @@
+import AddToCartButton from "@/components/modules/add-to-cart-button";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -159,14 +160,7 @@ const MenuPage = async () => {
                     >
                       View Details
                     </Link>
-                    <Button
-                      size="icon"
-                      className="h-10 w-10 shrink-0 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition-colors shadow-sm focus:scale-95"
-                      disabled={!meal.isAvailable}
-                      aria-label={`Add ${meal.name} to cart`}
-                    >
-                      <ShoppingCart className="h-4 w-4" />
-                    </Button>
+                   <AddToCartButton meal={meal} />
                   </div>
                 </div>
               </div>
