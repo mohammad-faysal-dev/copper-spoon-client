@@ -22,42 +22,71 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | null>(null);
 
-export function CartProvider({ children }: { children: ReactNode }) {
+export function CartProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
   const [items, setItems] = useState<CartItem[]>([]);
+  const [isHydrated, setIsHydrated] = useState(false);
 
+  // Load cart from localStorage
   useEffect(() => {
     const cart = localStorage.getItem("foodhub-cart");
 
     if (cart) {
-      setItems(JSON.parse(cart));
+      try {
+        setItems(JSON.parse(cart));
+      } catch {
+        localStorage.removeItem("foodhub-cart");
+      }
     }
+
+    setIsHydrated(true);
   }, []);
 
+  // Save cart to localStorage
   useEffect(() => {
-    localStorage.setItem("foodhub-cart", JSON.stringify(items));
-  }, [items]);
+    if (!isHydrated) return;
+
+    localStorage.setItem(
+      "foodhub-cart",
+      JSON.stringify(items),
+    );
+  }, [items, isHydrated]);
 
   const addToCart = (meal: Meal) => {
-    setItems((items) => {
-      const existingItem = items.find(
+    setItems((currentItems) => {
+      const existingItem = currentItems.find(
         (item) => item.meal.id === meal.id,
       );
 
       if (existingItem) {
-        return items.map((item) =>
+        return currentItems.map((item) =>
           item.meal.id === meal.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                quantity: item.quantity + 1,
+              }
             : item,
         );
       }
 
-      return [...items, { meal, quantity: 1 }];
+      return [
+        ...currentItems,
+        {
+          meal,
+          quantity: 1,
+        },
+      ];
     });
   };
 
   const removeFromCart = (mealId: string) => {
-    setItems((items) =>
-      items.filter((item) => item.meal.id !== mealId),
+    setItems((currentItems) =>
+      currentItems.filter(
+        (item) => item.meal.id !== mealId,
+      ),
     );
   };
 
@@ -70,10 +99,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       return;
     }
 
-    setItems((items) =>
-      items.map((item) =>
+    setItems((currentItems) =>
+      currentItems.map((item) =>
         item.meal.id === mealId
-          ? { ...item, quantity }
+          ? {
+              ...item,
+              quantity,
+            }
           : item,
       ),
     );
@@ -84,8 +116,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const total = items.reduce(
-    (total, item) =>
-      total + item.meal.price * item.quantity,
+    (sum, item) =>
+      sum + item.meal.price * item.quantity,
     0,
   );
 
