@@ -6,7 +6,7 @@ export const customerRoute: Route[] = [
     title: "Customer Management",
     items: [
       {
-        title: "Home",
+        title: "Dashboard",
         url: "/dashboard",
         icon: Home,
       },
@@ -16,10 +16,10 @@ export const customerRoute: Route[] = [
         icon: User,
       },
       {
-  title: "Order",
-  url: "/dashboard/order",
-  icon: ShoppingBag,
-},
+        title: "Order",
+        url: "/dashboard/order",
+        icon: ShoppingBag,
+      },
       {
         title: "Cart",
         url: "/dashboard/cart",
