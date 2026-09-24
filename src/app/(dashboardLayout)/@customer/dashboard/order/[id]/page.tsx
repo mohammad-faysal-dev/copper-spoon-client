@@ -2,7 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { ArrowLeft, CheckCircle2, Clock, Package, Truck, Activity, MapPin, ReceiptText } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 
 import { orderService } from "@/services/order.service";
@@ -33,9 +33,9 @@ export default async function OrderTrackPage({ params }: PageProps) {
                     <div className="rounded-2xl border border-destructive/20 bg-destructive/10 p-12 text-center max-w-lg mx-auto">
                         <h1 className="text-2xl font-bold text-destructive mb-2">Order Not Found</h1>
                         <p className="text-muted-foreground mt-2">{error?.message || "Could not fetch order data."}</p>
-                        <Button asChild className="mt-6 rounded-xl">
-                            <Link href="/dashboard/order">Go Back</Link>
-                        </Button>
+                        <Link href="/dashboard/order" className={buttonVariants({ variant: "default", className: "mt-6 rounded-xl" })}>
+                            Go Back
+                        </Link>
                     </div>
                 </div>
             </main>
@@ -44,7 +44,7 @@ export default async function OrderTrackPage({ params }: PageProps) {
 
     const currentStepIndex = ORDER_STEPS.find((s) => s.id === order.status)?.index ?? -1;
     const isCancelled = order.status === "CANCELLED";
-    const total = order.items.reduce((acc: number, item: any) => acc + (item.price * item.quantity), 0);
+    const total = order.items.reduce((acc: number, item: any) => acc + (Number(item.price) * Number(item.quantity)), 0);
 
     return (
         <main className="min-h-screen bg-background">
@@ -53,11 +53,9 @@ export default async function OrderTrackPage({ params }: PageProps) {
                 <div className="absolute inset-0 opacity-10 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
                 <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full border border-white/10 opacity-20" />
                 <div className="relative flex items-center gap-4">
-                    <Button variant="ghost" size="icon" asChild className="text-white/60 hover:text-white hover:bg-white/10 rounded-xl">
-                        <Link href="/dashboard/order">
-                            <ArrowLeft className="h-5 w-5" />
-                        </Link>
-                    </Button>
+                    <Link href="/dashboard/order" className={buttonVariants({ variant: "ghost", size: "icon", className: "text-white/60 hover:text-white hover:bg-white/10 rounded-xl" })}>
+                        <ArrowLeft className="h-5 w-5" />
+                    </Link>
                     <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 border border-white/20">
                         <Activity className="h-7 w-7 text-white" />
                     </div>
@@ -188,7 +186,7 @@ export default async function OrderTrackPage({ params }: PageProps) {
                                             <span className="text-muted-foreground">
                                                 {item.quantity} × {item.meal?.name || "Meal"}
                                             </span>
-                                            <span className="font-medium">৳{(item.price * item.quantity).toFixed(2)}</span>
+                                            <span className="font-medium">৳{(Number(item.price) * Number(item.quantity)).toFixed(2)}</span>
                                         </div>
                                     ))}
                                 </div>

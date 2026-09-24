@@ -10,7 +10,7 @@ import {
   Truck,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 import { cookies } from "next/headers";
 import { orderService } from "@/services/order.service";
@@ -47,9 +47,9 @@ export default async function OrdersPage() {
         <div className="container mx-auto px-4 pb-10">
           <div className="rounded-2xl border border-destructive/20 bg-destructive/10 p-12 text-center">
             <p className="text-destructive font-medium">{error.message}</p>
-            <Button asChild className="mt-6 rounded-xl">
-              <Link href="/dashboard/order">Try Again</Link>
-            </Button>
+            <Link href="/dashboard/order" className={buttonVariants({ variant: "default", className: "mt-6 rounded-xl" })}>
+              Try Again
+            </Link>
           </div>
         </div>
       </main>
@@ -81,12 +81,10 @@ export default async function OrdersPage() {
             <p className="mt-3 text-muted-foreground max-w-sm">
               You haven&apos;t placed any orders yet. Explore our menu and order your first meal!
             </p>
-            <Button asChild className="mt-8 rounded-xl px-8">
-              <Link href="/menu">
-                Browse Menu
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
+            <Link href="/menu" className={buttonVariants({ variant: "default", className: "mt-8 rounded-xl px-8" })}>
+              Browse Menu
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
           </div>
         </div>
       </main>
@@ -118,7 +116,7 @@ export default async function OrdersPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {orders.map((order) => {
             const total = order.items.reduce(
-              (sum, item) => sum + item.price * item.quantity,
+              (sum, item) => sum + Number(item.price) * Number(item.quantity),
               0,
             );
             const statusCfg = STATUS_CONFIG[order.status] ?? {
@@ -179,7 +177,7 @@ export default async function OrdersPage() {
                           </span>
                         </div>
                         <span className="font-semibold text-foreground shrink-0">
-                          ৳{(item.price * item.quantity).toFixed(2)}
+                          ৳{(Number(item.price) * Number(item.quantity)).toFixed(2)}
                         </span>
                       </div>
                     ))}

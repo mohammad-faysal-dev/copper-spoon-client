@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { menuService } from "@/services/menu.service";
 import { userService } from "@/services/user.service";
 
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const { data } = await menuService.getMenus()
   const { data: session } = await userService.getSession()

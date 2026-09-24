@@ -1,6 +1,6 @@
 import AddToCartButton from "@/components/modules/add-to-cart-button";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { menuService } from "@/services/menu.service";
 import {
@@ -39,12 +39,10 @@ const MenuDetailsPage = async ({
             removed.
           </p>
 
-          <Button asChild className="mt-6">
-            <Link href="/menu">
-              <ArrowLeft className="mr-2 size-4" />
-              Back to Menu
-            </Link>
-          </Button>
+          <Link href="/menu" className={buttonVariants({ variant: "default", className: "mt-6" })}>
+            <ArrowLeft className="mr-2 size-4" />
+            Back to Menu
+          </Link>
         </div>
       </main>
     );

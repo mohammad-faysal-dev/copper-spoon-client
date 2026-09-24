@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import { authClient } from "@/lib/auth";
 import { Button } from "../ui/button";
 import { Mail, Lock, Loader2 } from "lucide-react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -34,7 +34,7 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const router=useRouter()
+  const router = useRouter()
   const handleGoogleLogin = async () => {
     const data = await authClient.signIn.social({
       provider: "google",

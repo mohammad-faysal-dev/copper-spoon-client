@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -20,20 +21,20 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      
+
       <AppSidebar user={userInfo}>
         <main className="flex-1 p-4">
           <SidebarTrigger />
           <div>
-            {userInfo.role === Roles.admin && admin}
-            {userInfo.role === Roles.customer && customer}
-            {userInfo.role === Roles.provider && provider}
-           {children}
+            {userInfo?.role === Roles.admin && admin}
+            {userInfo?.role === Roles.customer && customer}
+            {userInfo?.role === Roles.provider && provider}
+            {children}
           </div>
-          
+
         </main>
       </AppSidebar>
-      
+
     </SidebarProvider>
   );
 }
