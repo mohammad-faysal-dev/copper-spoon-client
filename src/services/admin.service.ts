@@ -1,4 +1,6 @@
 import { UpdateUserStatusPayload, User } from "@/types/user.type";
+import { Cookie } from "next/font/google";
+import { cookies } from "next/headers";
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -10,8 +12,12 @@ export const adminService = {
     error: { message: string } | null;
   }> {
     try {
+      const cookeiStore = await cookies()
       const res = await fetch(`${API_URL}/admin/users`, {
         method: "GET",
+        headers: {
+          Cookie: cookeiStore.toString()
+        },
         credentials: "include",
       });
 

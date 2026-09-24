@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { ShoppingBag, Truck, CreditCard, ArrowLeft, ArrowRight, MapPin, ChefHat } from "lucide-react";
 import { useCart } from "@/providers/cart-provider";
 import { orderService } from "@/services/order.service";
@@ -18,6 +17,7 @@ export default function CheckoutPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  console.log(items)
   const handleCheckout = async () => {
     if (!address.trim()) {
       setError("Please enter a delivery address.");

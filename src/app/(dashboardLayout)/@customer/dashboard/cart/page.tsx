@@ -6,7 +6,7 @@ import { Minus, Plus, ShoppingCart, Trash2, ArrowRight, ChefHat } from "lucide-r
 import { useCart } from "@/providers/cart-provider";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+
 
 export default function CartPage() {
   const {
