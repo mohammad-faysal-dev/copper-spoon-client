@@ -1,5 +1,5 @@
 import { Route } from "@/types/routes.type";
-import { ClipboardList, LayoutDashboard, Users } from "lucide-react";
+import { ClipboardList, FolderTree, LayoutDashboard, Users } from "lucide-react";
 
 export const adminRoutes: Route[] = [
   {
@@ -19,6 +19,11 @@ export const adminRoutes: Route[] = [
         title: "Orders",
         url: "/admin-dashboard/orders",
         icon: ClipboardList,
+      },
+      {
+        title: "Categories",
+        url: "/admin-dashboard/categories",
+        icon: FolderTree,
       }
     ],
   },

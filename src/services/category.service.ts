@@ -1,4 +1,5 @@
 import { Category, CreateCategoryPayload, UpdateCategoryPayload } from "@/types/category.type";
+import { cookies } from "next/headers";
 
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -50,10 +51,12 @@ export const categoryService = {
     error: { message: string } | null;
   }> {
     try {
+      const cookieStore = await cookies();
       const res = await fetch(`${API_URL}/category`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
         },
         credentials: "include",
         body: JSON.stringify(payload),
@@ -135,10 +138,12 @@ export const categoryService = {
     error: { message: string } | null;
   }> {
     try {
+      const cookieStore = await cookies();
       const res = await fetch(`${API_URL}/category/${categoryId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Cookie: cookieStore.toString(),
         },
         credentials: "include",
         body: JSON.stringify(payload),
@@ -179,8 +184,13 @@ export const categoryService = {
     error: { message: string } | null;
   }> {
     try {
+      const cookieStore = await cookies();
       const res = await fetch(`${API_URL}/category/${categoryId}`, {
         method: "DELETE",
+
+        headers: {
+          Cookie: cookieStore.toString(),
+        },
         credentials: "include",
       });
 
