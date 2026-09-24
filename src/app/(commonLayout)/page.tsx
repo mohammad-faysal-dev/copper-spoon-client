@@ -6,7 +6,7 @@ import { userService } from "@/services/user.service";
 
 export default async function Home() {
   const { data } = await menuService.getMenus()
-  const{data:session} = await userService.getSession()
+  const { data: session } = await userService.getSession()
   console.log(session)
 
   return (
@@ -47,7 +47,7 @@ export default async function Home() {
                 <Link href="/menu">View Menu</Link>
               </Button>
             </div>
-          </div> 
+          </div>
         </div>
 
         {/* Decorative elements */}

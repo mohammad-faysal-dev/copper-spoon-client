@@ -1,5 +1,5 @@
 import { Route } from "@/types/routes.type";
-import { Home, ShoppingCart, User, CreditCard } from "lucide-react";
+import { Home, ShoppingCart, User, CreditCard, ShoppingBag } from "lucide-react";
 
 export const customerRoute: Route[] = [
   {
@@ -15,6 +15,11 @@ export const customerRoute: Route[] = [
         url: "/dashboard/profile",
         icon: User,
       },
+      {
+  title: "Order",
+  url: "/dashboard/order",
+  icon: ShoppingBag,
+},
       {
         title: "Cart",
         url: "/dashboard/cart",

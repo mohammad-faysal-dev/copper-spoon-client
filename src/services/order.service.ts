@@ -1,6 +1,6 @@
 import { CreateOrderPayload, Order } from "@/types/order.type";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const orderService = {
   createOrder: async function (
@@ -34,13 +34,17 @@ export const orderService = {
       return { data: null, error: { message: "Failed to create order" } };
     }
   },
-  getMyOrders: async function (): Promise<{
+  getMyOrders: async function (cookieStr?: string): Promise<{
     data: Order[] | null;
     error: { message: string } | null;
   }> {
     try {
+      const headers: HeadersInit = {};
+      if (cookieStr) headers["Cookie"] = cookieStr;
+
       const res = await fetch(`${API_URL}/orders/my-orders`, {
         method: "GET",
+        headers,
         credentials: "include",
       });
       const result = await res.json();
@@ -59,10 +63,15 @@ export const orderService = {
   },
   getOrderById: async function (
     orderId: string,
+    cookieStr?: string
   ): Promise<{ data: Order | null; error: { message: string } | null }> {
     try {
+      const headers: HeadersInit = {};
+      if (cookieStr) headers["Cookie"] = cookieStr;
+
       const res = await fetch(`${API_URL}/orders/${orderId}`, {
         method: "GET",
+        headers,
         credentials: "include",
       });
       const result = await res.json();
@@ -118,13 +127,17 @@ export const orderService = {
       };
     }
   },
-  getAllOrders: async function (): Promise<{
+  getAllOrders: async function (cookieStr?: string): Promise<{
     data: Order[] | null;
     error: { message: string } | null;
   }> {
     try {
+      const headers: HeadersInit = {};
+      if (cookieStr) headers["Cookie"] = cookieStr;
+
       const res = await fetch(`${API_URL}/orders`, {
         method: "GET",
+        headers,
         credentials: "include",
       });
       const result = await res.json();
