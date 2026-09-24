@@ -2,6 +2,7 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Roles } from "@/constant/roles";
+import { CartProvider } from "@/providers/cart-provider";
 import { userService } from "@/services/user.service";
 
 export default async function DashboardLayout({
@@ -16,10 +17,11 @@ export default async function DashboardLayout({
   provider: React.ReactNode;
 }) {
   const { data } = await userService.getSession();
-  const userInfo = data.user;
+  const userInfo = data?.user;
 
   return (
     <SidebarProvider>
+       <CartProvider>
       <AppSidebar user={userInfo}>
         <main className="flex-1 p-4">
           <SidebarTrigger />
@@ -27,11 +29,12 @@ export default async function DashboardLayout({
             {userInfo.role === Roles.admin && admin}
             {userInfo.role === Roles.customer && customer}
             {userInfo.role === Roles.provider && provider}
-            {children}
+           {children}
           </div>
           
         </main>
       </AppSidebar>
+      </CartProvider>
     </SidebarProvider>
   );
 }
