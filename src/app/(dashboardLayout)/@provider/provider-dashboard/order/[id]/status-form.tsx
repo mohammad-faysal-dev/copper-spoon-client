@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState } from "react";
@@ -25,52 +26,37 @@ import {
 import { orderService } from "@/services/order.service";
 import { OrderStatus } from "@/types/order.type";
 
-const STATUS_OPTIONS = [
+const statuses: OrderStatus[] = [
     "PENDING",
     "CONFIRMED",
     "PREPARING",
     "OUT_FOR_DELIVERY",
     "DELIVERED",
     "CANCELLED",
-] as const;
+];
+
+const statusLabels: Record<OrderStatus, string> = {
+    PENDING: "Pending",
+    CONFIRMED: "Confirmed",
+    PREPARING: "Preparing",
+    OUT_FOR_DELIVERY: "Out for Delivery",
+    DELIVERED: "Delivered",
+    CANCELLED: "Cancelled",
+};
+
+const statusIcons: Record<OrderStatus, React.ElementType> = {
+    PENDING: Clock3,
+    CONFIRMED: Check,
+    PREPARING: CircleDot,
+    OUT_FOR_DELIVERY: Truck,
+    DELIVERED: PackageCheck,
+    CANCELLED: XCircle,
+};
 
 interface OrderStatusFormProps {
     orderId: string;
     currentStatus: OrderStatus;
 }
-
-const statusConfig: Record<
-    string,
-    {
-        label: string;
-        icon: React.ElementType;
-    }
-> = {
-    PENDING: {
-        label: "Pending",
-        icon: Clock3,
-    },
-    CONFIRMED: {
-        label: "Confirmed",
-        icon: Check,
-    },
-    PREPARING: {
-        label: "Preparing",
-        icon: CircleDot,
-    },
-    OUT_FOR_DELIVERY: {
-        label: "Out for Delivery",
-        icon: Truck,
-    },
-    DELIVERED: {
-        label: "Delivered",
-        icon: PackageCheck,
-    },
-    CANCELLED: {
-        label: "Cancelled",
-        icon: XCircle,
-    },
-};
 
 export default function OrderStatusForm({
     orderId,
@@ -79,90 +65,69 @@ export default function OrderStatusForm({
     const router = useRouter();
 
     const [status, setStatus] = useState<OrderStatus>(currentStatus);
-    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const hasChanged = status !== currentStatus;
+    const changed = status !== currentStatus;
+    const Icon = statusIcons[status];
 
-    const selectedStatus = statusConfig[status];
-    const SelectedIcon = selectedStatus?.icon ?? CircleDot;
+    const handleUpdate = async () => {
+        if (!orderId || !changed) return;
 
-    const handleSubmit = async () => {
-        if (!orderId) {
-            toast.error("Order ID is missing");
-            console.error("Missing orderId:", orderId);
-            return;
-        }
-        if (!hasChanged) return;
+        setLoading(true);
 
-        setIsSubmitting(true);
+        const result = await orderService.updateOrderStatus(
+            orderId,
+            status,
+        );
 
-        try {
-            const result = await orderService.updateOrderStatus(
-                orderId,
-                status,
-            );
-
-            if (result.error) {
-                toast.error(result.error.message);
-                return;
-            }
-
+        if (result.error) {
+            toast.error(result.error.message);
+        } else {
             toast.success("Order status updated successfully");
-
             router.refresh();
-        } catch (error) {
-            console.error(
-                "Failed to update order status:",
-                error,
-            );
-
-            toast.error("Failed to update order status");
-        } finally {
-            setIsSubmitting(false);
         }
+
+        setLoading(false);
     };
 
     return (
         <div className="rounded-2xl border bg-card p-4 shadow-sm">
-            <div className="mb-4">
-                <h3 className="text-sm font-semibold">
-                    Update Order Status
-                </h3>
+            <h3 className="text-sm font-semibold">
+                Update Order Status
+            </h3>
 
-                <p className="mt-1 text-sm text-muted-foreground">
-                    Change the current status of this order.
-                </p>
-            </div>
+            <p className="mt-1 text-sm text-muted-foreground">
+                Change the current status of this order.
+            </p>
 
-            <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <div className="mt-4 flex flex-col gap-3 sm:flex-row">
                 <Select
                     value={status}
-                    onValueChange={(val) => setStatus(val as OrderStatus)}
-                    disabled={isSubmitting}
+                    onValueChange={(value) =>
+                        setStatus(value as OrderStatus)
+                    }
+                    disabled={loading}
                 >
                     <SelectTrigger className="h-11 w-full rounded-xl sm:w-72">
                         <div className="flex items-center gap-2">
-                            <SelectedIcon className="size-4 text-muted-foreground" />
-
-                            <SelectValue placeholder="Select status" />
+                            <Icon className="size-4 text-muted-foreground" />
+                            <SelectValue />
                         </div>
                     </SelectTrigger>
 
                     <SelectContent>
-                        {STATUS_OPTIONS.map((option) => {
-                            const config = statusConfig[option];
-                            const Icon = config.icon;
+                        {statuses.map((item) => {
+                            const StatusIcon = statusIcons[item];
 
                             return (
                                 <SelectItem
-                                    key={option}
-                                    value={option}
+                                    key={item}
+                                    value={item}
                                     className="rounded-lg"
                                 >
                                     <div className="flex items-center gap-2">
-                                        <Icon className="size-4 text-muted-foreground" />
-
-                                        <span>{config.label}</span>
+                                        <StatusIcon className="size-4" />
+                                        {statusLabels[item]}
                                     </div>
                                 </SelectItem>
                             );
@@ -171,12 +136,11 @@ export default function OrderStatusForm({
                 </Select>
 
                 <Button
-                    type="button"
-                    onClick={handleSubmit}
-                    disabled={!hasChanged || isSubmitting}
+                    onClick={handleUpdate}
+                    disabled={!changed || loading}
                     className="h-11 rounded-xl px-6"
                 >
-                    {isSubmitting ? (
+                    {loading ? (
                         <>
                             <Loader2 className="mr-2 size-4 animate-spin" />
                             Updating...
@@ -190,19 +154,15 @@ export default function OrderStatusForm({
                 </Button>
             </div>
 
-            {hasChanged && (
-                <div className="mt-4 flex items-center gap-2 rounded-xl bg-muted/50 px-3 py-2.5 text-sm">
-                    <SelectedIcon className="size-4 text-muted-foreground" />
-
-                    <span className="text-muted-foreground">
-                        New status:
-                    </span>
-
+            {changed && (
+                <div className="mt-4 rounded-xl bg-muted/50 px-3 py-2 text-sm">
+                    New status:{" "}
                     <span className="font-medium">
-                        {selectedStatus?.label}
+                        {statusLabels[status]}
                     </span>
                 </div>
             )}
         </div>
     );
 }
+

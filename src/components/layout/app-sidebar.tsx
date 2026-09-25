@@ -2,14 +2,19 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Utensils, LogOut, LayoutDashboard, ChevronRight } from "lucide-react";
+import {
+  Utensils,
+  LogOut,
+  ChevronRight,
+  Home,
+  Sparkles,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -24,9 +29,21 @@ type AppSidebarProps = {
   user: {
     role: string;
     name?: string;
+    email?: string;
   };
   children: React.ReactNode;
 };
+
+const ROLE_META: Record<string, { label: string; accent: string; glow: string }> = {
+  admin: { label: "Admin Panel", accent: "#7c3aed", glow: "rgba(124,58,237,0.35)" },
+  customer: { label: "Customer Panel", accent: "#059669", glow: "rgba(5,150,105,0.35)" },
+  provider: { label: "Provider Panel", accent: "#b45309", glow: "rgba(180,83,9,0.35)" },
+};
+
+function getInitials(name?: string) {
+  if (!name) return "CS";
+  return name.split(" ").map((n) => n[0]).slice(0, 2).join("").toUpperCase();
+}
 
 export function AppSidebar({ user, children }: AppSidebarProps) {
   const pathname = usePathname();
@@ -40,62 +57,150 @@ export function AppSidebar({ user, children }: AppSidebarProps) {
           ? providerRoutes
           : [];
 
+  const role = ROLE_META[user.role] ?? ROLE_META.provider;
+
   return (
     <>
-      <Sidebar variant="inset" className="border-r border-border/40 shadow-xl bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/80">
-        <SidebarHeader className="border-b border-border/40 py-6 px-5 bg-gradient-to-br from-primary/5 via-primary/5 to-transparent relative overflow-hidden">
-          {/* Subtle background glow */}
-          <div className="absolute top-0 right-0 -mr-8 -mt-8 w-24 h-24 rounded-full bg-primary/20 blur-2xl opacity-70"></div>
-
-          <div className="flex items-center gap-4 relative z-10">
-            <div className="flex aspect-square size-10 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg shadow-primary/20 ring-1 ring-primary/20 transition-transform duration-300 hover:scale-105">
-              <Utensils className="size-5" />
+      <Sidebar
+        variant="inset"
+        className="border-r border-border/50 bg-sidebar shadow-xl"
+      >
+        {/* ── HEADER ── */}
+        <SidebarHeader className="px-5 pt-6 pb-5 border-b border-border/50">
+          {/* Brand Row */}
+          <div className="flex items-center gap-3">
+            <div
+              className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl shadow-lg"
+              style={{
+                background: "linear-gradient(135deg, #92400e 0%, #d97706 100%)",
+                boxShadow: "0 4px 14px rgba(184,115,51,0.4)",
+              }}
+            >
+              <Utensils className="h-5 w-5 text-amber-100" />
             </div>
-            <div className="flex flex-col gap-1 leading-none">
-              <span className="font-bold text-[1.15rem] text-foreground tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70">
+            <div>
+              <p className="text-[15px] font-black tracking-tight text-foreground leading-none">
                 Copper Spoon
-              </span>
-              <span className="text-[0.7rem] font-medium text-muted-foreground uppercase tracking-widest bg-primary/10 text-primary px-2 py-0.5 rounded-full w-fit">
-                {user.role} Panel
+              </p>
+              <div className="flex items-center gap-1 mt-1">
+                <Sparkles className="h-2.5 w-2.5 text-amber-500/70" />
+                <span className="text-[9px] font-bold uppercase tracking-[0.2em] text-muted-foreground/60">
+                  Kitchen &amp; Co.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* User card */}
+          <div className="mt-4 flex items-center gap-3 rounded-xl bg-muted/50 border border-border/60 px-3.5 py-3">
+            <div
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg text-[13px] font-black text-white shadow-md"
+              style={{
+                background: `linear-gradient(135deg, ${role.accent} 0%, ${role.accent}cc 100%)`,
+                boxShadow: `0 3px 10px ${role.glow}`,
+              }}
+            >
+              {getInitials(user.name)}
+            </div>
+            <div className="min-w-0">
+              <p className="text-sm font-semibold text-foreground truncate leading-tight">
+                {user.name ?? "Welcome"}
+              </p>
+              <span
+                className="text-[9px] font-bold uppercase tracking-[0.15em] px-1.5 py-0.5 rounded-full mt-0.5 inline-block"
+                style={{
+                  background: `${role.accent}18`,
+                  color: role.accent,
+                  border: `1px solid ${role.accent}30`,
+                }}
+              >
+                {role.label}
               </span>
             </div>
           </div>
         </SidebarHeader>
 
-        <SidebarContent className="px-3 py-6 space-y-6">
+        {/* ── NAV ── */}
+        <SidebarContent className="px-3 py-5">
           {routes.map((route) => (
-            <SidebarGroup key={route.title} className="px-1">
-              <SidebarGroupLabel className="text-[11px] font-semibold uppercase tracking-[0.15em] text-muted-foreground/60 mb-3 px-2 flex items-center gap-2">
-                <span className="h-px bg-border flex-1 border-dashed"></span>
-                {route.title}
-                <span className="h-px bg-border flex-1 border-dashed"></span>
-              </SidebarGroupLabel>
+            <SidebarGroup key={route.title} className="mb-3">
+              {/* Section label */}
+              <div className="flex items-center gap-2 px-2 mb-2.5">
+                <div className="h-px flex-1 bg-border/60" />
+                <span className="text-[9px] font-bold uppercase tracking-[0.18em] text-muted-foreground/50 whitespace-nowrap">
+                  {route.title}
+                </span>
+                <div className="h-px flex-1 bg-border/60" />
+              </div>
 
-              <SidebarMenu className="gap-1.5">
+              <SidebarMenu className="gap-0.5">
                 {route.items.map((item) => {
-                  const isDashboardHome = item.url === '/dashboard' || item.url === '/admin-dashboard';
-                  const isActive = pathname === item.url || (!isDashboardHome && pathname?.startsWith(item.url + '/'));
+                  const isDashboardHome =
+                    item.url === "/dashboard" ||
+                    item.url === "/admin-dashboard" ||
+                    item.url === "/provider-dashboard";
+                  const isActive =
+                    pathname === item.url ||
+                    (!isDashboardHome && pathname?.startsWith(item.url + "/"));
 
                   return (
                     <SidebarMenuItem key={item.title}>
                       <SidebarMenuButton
                         isActive={isActive}
-                        className={`group relative overflow-hidden rounded-xl transition-all duration-300 ease-out h-11 px-3 ${isActive
-                          ? 'bg-gradient-to-r from-primary/15 to-primary/5 text-primary font-semibold shadow-sm ring-1 ring-primary/20'
-                          : 'text-muted-foreground hover:bg-primary/5 hover:text-foreground hover:pl-5'
-                          }`}
+                        asChild
+                        className="p-0 h-auto bg-transparent hover:bg-transparent"
                       >
-                        {/* Active Indicator Bar */}
-                        <div className={`absolute left-0 top-0 h-full w-1 rounded-r-md transition-all duration-300 bg-primary ${isActive ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-0 text-transparent'}`}></div>
+                        <Link
+                          href={item.url}
+                          className={`group relative flex w-full items-center gap-3 rounded-xl px-3 py-2.5 transition-all duration-300 overflow-hidden ${isActive
+                              ? "text-foreground font-semibold bg-background border border-border shadow-sm"
+                              : "text-muted-foreground hover:text-foreground hover:bg-muted/60 border border-transparent"
+                            }`}
+                        >
+                          {/* Active left indicator */}
+                          {isActive && (
+                            <span
+                              className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 rounded-r-full"
+                              style={{
+                                background: `linear-gradient(180deg, ${role.accent}, ${role.accent}99)`,
+                                boxShadow: `0 0 8px ${role.glow}`,
+                              }}
+                            />
+                          )}
 
-                        <Link className="flex w-full items-center gap-3 relative z-10" href={item.url}>
-                          <div className={`flex items-center justify-center rounded-lg p-1.5 transition-colors duration-300 ${isActive ? 'bg-primary text-primary-foreground shadow-sm shadow-primary/30' : 'bg-muted/50 group-hover:bg-primary/20 group-hover:text-primary transition-transform duration-300 group-hover:scale-110'}`}>
-                            <item.icon className="size-4" />
+                          {/* Hover shimmer */}
+                          <span className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-foreground/[0.03] to-transparent rounded-xl pointer-events-none" />
+
+                          {/* Icon */}
+                          <div
+                            className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-all duration-300 ${isActive
+                                ? "text-white scale-105"
+                                : "bg-muted/70 text-muted-foreground group-hover:scale-105 group-hover:text-foreground"
+                              }`}
+                            style={
+                              isActive
+                                ? {
+                                  background: `linear-gradient(135deg, ${role.accent} 0%, ${role.accent}cc 100%)`,
+                                  boxShadow: `0 3px 10px ${role.glow}`,
+                                }
+                                : {}
+                            }
+                          >
+                            <item.icon className="h-4 w-4" />
                           </div>
-                          <span className="text-[14px] flex-1">{item.title}</span>
 
-                          {/* Chevron for hover/active visual cues */}
-                          <ChevronRight className={`size-4 opacity-0 -translate-x-2 transition-all duration-300 ${isActive ? 'opacity-100 translate-x-0' : 'group-hover:opacity-50 group-hover:translate-x-0'}`} />
+                          {/* Label */}
+                          <span className="relative z-10 flex-1 text-[13.5px] tracking-tight">
+                            {item.title}
+                          </span>
+
+                          {/* Chevron */}
+                          <ChevronRight
+                            className={`relative z-10 h-3.5 w-3.5 transition-all duration-300 ${isActive
+                                ? "opacity-60 translate-x-0"
+                                : "opacity-0 -translate-x-2 group-hover:opacity-30 group-hover:translate-x-0"
+                              }`}
+                          />
                         </Link>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
@@ -106,30 +211,40 @@ export function AppSidebar({ user, children }: AppSidebarProps) {
           ))}
         </SidebarContent>
 
-        <SidebarFooter className="border-t border-border/40 p-4 pb-6 mt-auto bg-gradient-to-t from-muted/30 to-transparent">
-          <SidebarMenu className="gap-2">
+        {/* ── FOOTER ── */}
+        <SidebarFooter className="px-4 pt-3 pb-6 border-t border-border/50">
+          <SidebarMenu className="gap-2 mt-2">
+            {/* Home */}
             <SidebarMenuItem>
-              <SidebarMenuButton className="w-full justify-center h-11 rounded-xl bg-background border shadow-sm hover:shadow-md hover:border-primary/30 text-muted-foreground hover:text-primary transition-all duration-300 group">
-                <Link href="/" className="flex w-full items-center justify-center gap-2">
-                  <span className="group-hover:-translate-x-1 transition-transform duration-300 font-medium">Home</span>
+              <SidebarMenuButton asChild className="p-0 h-auto bg-transparent hover:bg-transparent">
+                <Link
+                  href="/"
+                  className="group flex w-full items-center justify-center gap-2 rounded-xl h-10 text-sm font-medium text-muted-foreground hover:text-foreground border border-border/60 hover:border-border hover:bg-muted/50 transition-all duration-300"
+                >
+                  <Home className="h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+                  <span>Back to Home</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
 
+            {/* Logout */}
             <SidebarMenuItem>
-              <SidebarMenuButton className="w-full justify-center h-11 rounded-xl bg-destructive/5 text-destructive/80 hover:bg-destructive hover:text-destructive-foreground hover:shadow-lg hover:shadow-destructive/20 transition-all duration-300 group">
-                <div className="flex items-center gap-2">
-                  <LogOut className="size-4 group-hover:scale-110 transition-transform duration-300" />
-                  <span className="font-medium">Log out</span>
-                </div>
+              <SidebarMenuButton asChild className="p-0 h-auto bg-transparent hover:bg-transparent">
+                <button className="group flex w-full items-center justify-center gap-2 rounded-xl h-10 text-sm font-medium text-destructive/70 hover:text-destructive-foreground border border-destructive/15 hover:border-destructive/40 hover:bg-destructive transition-all duration-300 hover:shadow-lg hover:shadow-destructive/20">
+                  <LogOut className="h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+                  <span>Log out</span>
+                </button>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
+
+          <p className="mt-4 text-center text-[9px] uppercase tracking-widest text-muted-foreground/30 font-medium">
+            © 2025 Copper Spoon
+          </p>
         </SidebarFooter>
       </Sidebar>
-      <SidebarInset>
-        {children}
-      </SidebarInset>
+
+      <SidebarInset>{children}</SidebarInset>
     </>
   );
 }
