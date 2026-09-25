@@ -1,6 +1,5 @@
 import Link from "next/link";
 import {
-    Pencil,
     Plus,
     Trash2,
     Utensils,
@@ -119,28 +118,14 @@ export default async function ProviderMealsPage() {
                                     ৳{Number(meal.price).toFixed(2)}
                                 </p>
 
-                                <div className="mt-5 flex gap-2">
-                                    {/* Edit */}
+                                <div className="mt-5 border-t pt-4">
                                     <Button
-                                        variant="outline"
-                                        className="flex-1"
-                                        asChild
-                                    >
-                                        <Link
-                                            href={`/provider-dashboard/menu/${meal.id}/edit`}
-                                        >
-                                            <Pencil className="mr-2 size-4" />
-                                            Edit
-                                        </Link>
-                                    </Button>
-
-                                    {/* Delete */}
-                                    <Button
-                                        variant="destructive"
-                                        size="icon"
+                                        variant="ghost"
+                                        className="w-full text-destructive hover:bg-destructive/10 hover:text-destructive"
                                         aria-label={`Delete ${meal.name}`}
                                     >
-                                        <Trash2 className="size-4" />
+                                        <Trash2 className="mr-2 size-4" />
+                                        Remove Item
                                     </Button>
                                 </div>
                             </CardContent>
