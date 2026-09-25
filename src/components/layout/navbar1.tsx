@@ -191,16 +191,19 @@ const Navbar1 = ({
             {/* Navigation */}
             <NavigationMenu>
               <NavigationMenuList className="gap-2">
-                {menu.map((item) => (
-                  <NavigationMenuItem key={item.title}>
-                    <NavigationMenuLink
-                      href={item.url}
-                      className="inline-flex h-9 items-center justify-center rounded-full px-4 text-sm font-semibold text-muted-foreground transition-all duration-300 hover:bg-primary/10 hover:text-primary data-active:bg-primary/10 data-active:text-primary"
-                    >
-                      {item.title}
-                    </NavigationMenuLink>
-                  </NavigationMenuItem>
-                ))}
+                {menu.map((item) => {
+                  if (item.title === "Dashboard" && !isLoggedIn) return null;
+                  return (
+                    <NavigationMenuItem key={item.title}>
+                      <NavigationMenuLink
+                        href={item.url}
+                        className="inline-flex h-9 items-center justify-center rounded-full px-4 text-sm font-semibold text-muted-foreground transition-all duration-300 hover:bg-primary/10 hover:text-primary data-active:bg-primary/10 data-active:text-primary"
+                      >
+                        {item.title}
+                      </NavigationMenuLink>
+                    </NavigationMenuItem>
+                  );
+                })}
               </NavigationMenuList>
             </NavigationMenu>
           </div>
@@ -330,15 +333,18 @@ const Navbar1 = ({
 
                     {/* Mobile Menu */}
                     <nav className="flex flex-col gap-3">
-                      {menu.map((item) => (
-                        <a
-                          key={item.title}
-                          href={item.url}
-                          className="rounded-2xl px-4 py-3 text-lg font-semibold text-foreground transition-all hover:bg-primary/10 hover:text-primary"
-                        >
-                          {item.title}
-                        </a>
-                      ))}
+                      {menu.map((item) => {
+                        if (item.title === "Dashboard" && !isLoggedIn) return null;
+                        return (
+                          <a
+                            key={item.title}
+                            href={item.url}
+                            className="rounded-2xl px-4 py-3 text-lg font-semibold text-foreground transition-all hover:bg-primary/10 hover:text-primary"
+                          >
+                            {item.title}
+                          </a>
+                        );
+                      })}
                     </nav>
 
                     {/* Mobile Authentication */}

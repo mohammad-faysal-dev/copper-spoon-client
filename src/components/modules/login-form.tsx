@@ -50,9 +50,11 @@ export function LoginForm({
           toast.error(error.message, { id: toastId });
           return;
         }
-        toast.success("User Created Successfully", { id: toastId });
-        router.push("/");
-        router.refresh();
+
+        toast.success("Signed in successfully", { id: toastId });
+
+        // Redirect to homepage with a hard refresh so navbar updates immediately
+        window.location.href = "/";
       } catch (err) {
         toast.error("Something went wrong, please try again", { id: toastId });
       }
