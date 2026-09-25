@@ -6,9 +6,7 @@
 
 **Copper Spoon** is a modern, dynamic web application designed to streamline the relationship between restaurant providers and their customers. It features a premium, glassmorphism-inspired UI with robust tools for food ordering, expense invoice generation, and provider profile management.
 
-> **Note:** [TODO: Insert a high-quality screenshot or animated GIF of the dashboard here to replace this block]
-
-**Live Demo:** [TODO: Insert link to deployed app] | **Backend Repo API:** [TODO: Insert link to backend repo if separate]
+**Live Demo:** [PASTE_DEPLOYED_APP_URL] &nbsp;|&nbsp; **Backend API Repo:** [PASTE_BACKEND_REPO_URL]
 
 ---
 
@@ -54,6 +52,7 @@ copper-spoon-client/
 Make sure you have **Node.js (v20+)** installed on your machine.
 
 ### 1. Clone & Install
+
 ```bash
 git clone https://github.com/mohammad-faysal-dev/copper-spoon-client.git
 cd copper-spoon-client
@@ -61,72 +60,67 @@ npm install
 ```
 
 ### 2. Environment Variables
-Copy the example environment file and fill in your local details.
+
+Copy the example environment file and fill in your local details:
 
 ```bash
 cp .env.local.example .env.local
 ```
+
 **Required Variables:**
-*   `NEXT_PUBLIC_API_URL`: URL to your backend server (e.g., `http://localhost:5000/api`)
-*   `AUTH_SECRET`: Secret key for better-auth session encryption.
+
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_API_URL` | URL to your backend server (e.g., `http://localhost:5000/api`) |
+| `AUTH_SECRET` | Secret key for Better Auth session encryption — generate with `openssl rand -base64 32` |
 
 ### 3. Run the Development Server
+
 ```bash
 npm run dev
 ```
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ---
 
 ## 📜 Available Scripts
 
-In the project directory, you can run:
-
-*   `npm run dev` - Runs the app in development mode.
-*   `npm run build` - Builds the app for production to the `.next` folder.
-*   `npm run start` - Starts the production server.
-*   `npm run lint` - Runs ESLint to catch syntax and style issues.
-
----
-
-## 🗺️ Roadmap (Upcoming Features)
-
-- [ ] Integrate Stripe for real-time payment processing and secure checkouts.
-- [ ] Add dark mode toggle across all dashboard components.
-- [ ] Implement multi-language support (i18n) for wider accessibility.
-- [ ] Comprehensive analytics charts for provider sales tracking.
+| Script | Description |
+|---|---|
+| `npm run dev` | Runs the app in development mode |
+| `npm run build` | Builds the app for production to the `.next` folder |
+| `npm run start` | Starts the production server |
+| `npm run lint` | Runs ESLint to catch syntax and style issues |
 
 ---
 
 ## 🐛 Troubleshooting
 
 **"I'm getting a Zod validation error on the profile page"**
-Ensure that your backend is returning the exact schema expected by the frontend. Check that your local `.env.local` is pointing to the correct development database API.
+Ensure your backend is returning the exact schema expected by the frontend. Check that `.env.local` is pointing to the correct development database API.
 
-**"better-auth isn't loading sessions"**
-Clear your browser cookies and restart the dev server to ensure the session tokens are refreshed. Check that your `AUTH_SECRET` is correctly set.
+**"Better Auth isn't loading sessions"**
+Clear your browser cookies and restart the dev server to refresh session tokens. Check that `AUTH_SECRET` is correctly set.
 
 ---
 
-## 🤝 Contributing
+## 🗺️ Roadmap
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- [ ] Stripe integration for real-time payment processing
+- [ ] Dark mode toggle across dashboard components
+- [ ] Multi-language support (i18n)
+- [ ] Analytics charts for provider sales tracking
 
 ---
 
 ## 👨‍💻 Author
 
 **Mohammad Faysal**
-*   **GitHub:** [@mohammad-faysal-dev](https://github.com/mohammad-faysal-dev)
-*   **LinkedIn:** [TODO: Insert your LinkedIn URL]
-*   **Portfolio:** [TODO: Insert your website URL]
+- **GitHub:** [@mohammad-faysal-dev](https://github.com/mohammad-faysal-dev)
+- **LinkedIn:** [PASTE_LINKEDIN_URL]
+- **Portfolio:** [PASTE_PORTFOLIO_URL]
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
