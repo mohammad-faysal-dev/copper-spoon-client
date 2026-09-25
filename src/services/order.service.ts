@@ -83,7 +83,7 @@ export const orderService = {
           },
         };
       }
-      return { data: result, error: null };
+      return { data: result?.data ?? result, error: null };
     } catch (err) {
       return {
         data: null,
