@@ -37,7 +37,7 @@ export default async function ProviderMealsPage() {
                 </div>
 
                 <Button asChild>
-                    <Link href="/provider-dashboard/meals/add">
+                    <Link href="/provider-dashboard/menu/add">
                         <Plus className="mr-2 size-4" />
                         Add Meal
                     </Link>
@@ -65,7 +65,7 @@ export default async function ProviderMealsPage() {
                             </p>
 
                             <Button asChild className="mt-5">
-                                <Link href="/provider-dashboard/meals/add">
+                                <Link href="/provider-dashboard/menu/add">
                                     <Plus className="mr-2 size-4" />
                                     Add Meal
                                 </Link>
@@ -101,8 +101,8 @@ export default async function ProviderMealsPage() {
 
                                     <span
                                         className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-medium ${meal.isAvailable
-                                                ? "bg-green-500/10 text-green-600"
-                                                : "bg-red-500/10 text-red-600"
+                                            ? "bg-green-500/10 text-green-600"
+                                            : "bg-red-500/10 text-red-600"
                                             }`}
                                     >
                                         {meal.isAvailable ? "Available" : "Unavailable"}
@@ -127,7 +127,7 @@ export default async function ProviderMealsPage() {
                                         asChild
                                     >
                                         <Link
-                                            href={`/provider-dashboard/meals/${meal.id}/edit`}
+                                            href={`/provider-dashboard/menu/${meal.id}/edit`}
                                         >
                                             <Pencil className="mr-2 size-4" />
                                             Edit

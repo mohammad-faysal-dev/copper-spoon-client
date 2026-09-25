@@ -1,6 +1,6 @@
 import { CreateMealPayload, Meal } from "@/types/menu.type";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 console.log("API_URL:", API_URL);
 export const menuService = {
   getMenus: async function () {
