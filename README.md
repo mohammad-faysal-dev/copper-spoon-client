@@ -1,55 +1,78 @@
-# Copper Spoon Client 🍽️
+# Copper Spoon — Food Ordering Platform (Next.js 16 · React 19 · TypeScript)
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/React-19-blue.svg)
-![Next.js](https://img.shields.io/badge/Next.js-16-black.svg)
+> A full-stack food ordering web app for restaurants and their customers — built with Next.js 16 App Router, Better Auth, TailwindCSS v4, and Shadcn/ui.
 
-**Copper Spoon** is a modern, dynamic web application designed to streamline the relationship between restaurant providers and their customers. It features a premium, glassmorphism-inspired UI with robust tools for food ordering, expense invoice generation, and provider profile management.
-
-**Live Demo:** [PASTE_DEPLOYED_APP_URL] &nbsp;|&nbsp; **Backend API Repo:** [PASTE_BACKEND_REPO_URL]
+**Live Demo:** [TODO: add deployed URL] &nbsp;|&nbsp; **Backend API:** [TODO: add backend repo URL] &nbsp;|&nbsp; **Portfolio:** [TODO: add portfolio URL]
 
 ---
 
-## 🚀 Tech Stack
+## What It Does
 
-- **Framework:** [Next.js 16](https://nextjs.org/) (App Router, SSG/SSR)
-- **UI & Styling:** [TailwindCSS v4](https://tailwindcss.com/) + Shadcn/ui + Base-UI
-- **Validation:** [Zod](https://zod.dev/) + React Form
-- **Authentication:** [Better Auth](https://better-auth.com/)
-- **Icons & Assets:** Lucide React
+Copper Spoon connects restaurant **providers** with **customers** through a role-aware platform:
 
-## ✨ Key Features
-
-- **Provider Dashboard:** A specialized data-driven interface for restaurant providers to manage profiles, track orders, and generate expense invoices.
-- **Dynamic Ordering System:** Real-time customer cart, live tracking stepper, and smooth checkout flow.
-- **High-End UI/UX:** Premium aesthetic utilizing modern gradients, micro-animations, and responsive glassmorphism layouts.
-- **PDF Generation:** Automated expense invoice downloads directly from the dashboard.
-- **Role-Based Access Control:** Secure access differentiating between customers and restaurant providers.
+| Role | What they can do |
+|---|---|
+| **Customer** | Browse menus, add to cart, place orders, track live order status |
+| **Provider** | Manage restaurant profile, view & update incoming orders, export expense invoices as PDF |
+| **Admin** | Manage categories and platform-level data |
 
 ---
 
-## 📂 Project Structure
+## Tech Stack
 
-A quick look at how the core application is organized:
+| Layer | Technology |
+|---|---|
+| Framework | [Next.js 16](https://nextjs.org/) — App Router, SSR, Route Groups |
+| Language | TypeScript 5 |
+| UI | [TailwindCSS v4](https://tailwindcss.com/) + [Shadcn/ui](https://ui.shadcn.com/) + Base-UI |
+| Auth | [Better Auth](https://better-auth.com/) (session-based, role-gated routes) |
+| Validation | [Zod v4](https://zod.dev/) + TanStack Form |
+| PDF Export | html2pdf.js (expense invoice generation) |
+| Notifications | Sonner (toast system) |
+| Icons | Lucide React |
 
-```text
+---
+
+## Key Features
+
+- **Role-Based Dashboards** — Three parallel dashboard views (@admin, @customer, @provider) using Next.js parallel routes, each with role-gated access via Better Auth middleware.
+- **Live Order Tracking** — Visual progress stepper that reflects real-time order status updates (Pending → Processing → Delivered).
+- **Expense Invoice PDF** — Providers can download formatted PDF invoices per expense record directly from the dashboard dropdown.
+- **Smooth Checkout Flow** — Cart → Checkout → Order Confirmation with proper back-navigation and order creation via the backend API.
+- **Provider Profile Management** — Restaurant providers can update their restaurant name, description, phone, and address through a validated form.
+- **Premium UI/UX** — Glassmorphism-inspired design: gradient backgrounds, micro-animations, responsive layouts.
+
+---
+
+## Project Structure
+
+```
 copper-spoon-client/
 ├── src/
-│   ├── app/              # Next.js App Router (Pages, Layouts, API Routes)
-│   ├── components/       # Reusable UI components (shadcn, layout, etc.)
-│   ├── hooks/            # Custom React hooks for state and data fetching
-│   ├── lib/              # Utility functions and API configurations
-│   └── types/            # TypeScript interfaces and schema validations
-├── public/               # Static assets (images, fonts, templates)
-└── [Configuration Files] # tailwind.config, tsconfig, package.json etc.
+│   ├── app/
+│   │   ├── (commonLayout)/     # Public pages: home, menu, auth
+│   │   └── (dashboardLayout)/  # Protected dashboards per role
+│   │       ├── @admin/         # Admin panel (categories, management)
+│   │       ├── @customer/      # Customer: orders, cart, profile
+│   │       └── @provider/      # Provider: orders, profile, invoices
+│   ├── components/             # Reusable UI components (layout, shadcn)
+│   ├── services/               # API service layer (menu, order, provider, etc.)
+│   ├── hooks/                  # Custom React hooks
+│   ├── lib/                    # Utilities, auth client config
+│   ├── routes/                 # Route constants and middleware helpers
+│   ├── providers/              # React context providers
+│   └── types/                  # TypeScript interfaces and Zod schemas
+└── public/                     # Static assets
 ```
 
 ---
 
-## 🛠️ Getting Started
+## Getting Started
 
 ### Prerequisites
-Make sure you have **Node.js (v20+)** installed on your machine.
+
+- **Node.js v20+**
+- The **[Copper Spoon Backend API](TODO: backend repo link)** running locally on port `5000`
 
 ### 1. Clone & Install
 
@@ -59,20 +82,28 @@ cd copper-spoon-client
 npm install
 ```
 
-### 2. Environment Variables
+### 2. Configure Environment Variables
 
-Copy the example environment file and fill in your local details:
+Create a `.env.local` file in the root directory with the following:
 
-```bash
-cp .env.local.example .env.local
+```env
+# Backend API base URL (no trailing slash)
+NEXT_PUBLIC_API_URL=http://localhost:5000
+
+# Internal API URL (used in server-side fetches)
+API_URL=http://localhost:5000
+
+# App URL (used by Better Auth for redirects)
+APP_URL=http://localhost:3000
+
+# Better Auth session endpoint
+AUTH_URL=http://localhost:5000/api/auth
+
+# Better Auth secret — generate with: openssl rand -base64 32
+AUTH_SECRET=your_secret_here
 ```
 
-**Required Variables:**
-
-| Variable | Description |
-|---|---|
-| `NEXT_PUBLIC_API_URL` | URL to your backend server (e.g., `http://localhost:5000/api`) |
-| `AUTH_SECRET` | Secret key for Better Auth session encryption — generate with `openssl rand -base64 32` |
+> ⚠️ There is no `.env.local.example` file in this repo yet. Copy the block above directly.
 
 ### 3. Run the Development Server
 
@@ -80,47 +111,52 @@ cp .env.local.example .env.local
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 📜 Available Scripts
+## Available Scripts
 
 | Script | Description |
 |---|---|
-| `npm run dev` | Runs the app in development mode |
-| `npm run build` | Builds the app for production to the `.next` folder |
-| `npm run start` | Starts the production server |
-| `npm run lint` | Runs ESLint to catch syntax and style issues |
+| `npm run dev` | Start the development server |
+| `npm run build` | Build for production |
+| `npm run start` | Start the production server |
+| `npm run lint` | Run ESLint |
 
 ---
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
-**"I'm getting a Zod validation error on the profile page"**
-Ensure your backend is returning the exact schema expected by the frontend. Check that `.env.local` is pointing to the correct development database API.
+**Zod validation error on the profile page**
+Ensure your backend returns the exact schema the frontend expects. Double-check `NEXT_PUBLIC_API_URL` points to your running backend instance.
 
-**"Better Auth isn't loading sessions"**
-Clear your browser cookies and restart the dev server to refresh session tokens. Check that `AUTH_SECRET` is correctly set.
+**Better Auth sessions not loading**
+Clear browser cookies and restart the dev server. Verify `AUTH_SECRET` is set and `AUTH_URL` matches your backend's auth endpoint.
+
+**Orders not fetching / 401 errors**
+Server-side fetches pass cookies manually. Ensure the backend is running and `API_URL` is set correctly (not `NEXT_PUBLIC_API_URL` — these serve different purposes).
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [ ] Stripe integration for real-time payment processing
-- [ ] Dark mode toggle across dashboard components
+- [ ] Dark mode toggle across all dashboard components
 - [ ] Multi-language support (i18n)
-- [ ] Analytics charts for provider sales tracking
+- [ ] Sales analytics charts for provider dashboard
 
 ---
 
-## 👨‍💻 Author
+## Author
 
 **Mohammad Faysal**
-- **GitHub:** [@mohammad-faysal-dev](https://github.com/mohammad-faysal-dev)
-- **LinkedIn:** [PASTE_LINKEDIN_URL]
-- **Portfolio:** [PASTE_PORTFOLIO_URL]
+- GitHub: [@mohammad-faysal-dev](https://github.com/mohammad-faysal-dev)
+- LinkedIn: [TODO: add LinkedIn URL]
+- Portfolio: [TODO: add portfolio URL]
 
-## 📄 License
+---
 
-This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
+## License
+
+This project is licensed under the [MIT License](./LICENSE).
