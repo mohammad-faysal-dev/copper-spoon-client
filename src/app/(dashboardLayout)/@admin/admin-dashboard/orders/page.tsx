@@ -75,7 +75,7 @@ export default async function AdminOrdersPage() {
                                     </thead>
                                     <tbody className="divide-y divide-border/50">
                                         {orders.map((order) => {
-                                            const total = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+                                            const total = order.items.reduce((sum, item) => sum + Number(item.price) * Number(item.quantity), 0);
                                             return (
                                                 <tr key={order.id} className="hover:bg-muted/30 transition-colors group">
                                                     <td className="px-6 py-4">

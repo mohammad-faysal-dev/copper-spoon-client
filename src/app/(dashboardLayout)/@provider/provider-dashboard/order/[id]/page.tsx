@@ -13,9 +13,9 @@ interface PageProps {
 
 const statusConfig: Record<OrderStatus, { color: string, badge: string, icon: any }> = {
     PENDING: { color: "#fbbf24", badge: "bg-amber-100 text-amber-700 dark:bg-amber-400/10 dark:text-amber-400", icon: Clock3 },
-    CONFIRMED: { color: "#34d399", badge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400", icon: CheckCircle2 },
+    PLACED: { color: "#34d399", badge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-400/10 dark:text-emerald-400", icon: CheckCircle2 },
     PREPARING: { color: "#60a5fa", badge: "bg-blue-100 text-blue-700 dark:bg-blue-400/10 dark:text-blue-400", icon: CircleDot },
-    OUT_FOR_DELIVERY: { color: "#a78bfa", badge: "bg-purple-100 text-purple-700 dark:bg-purple-400/10 dark:text-purple-400", icon: Truck },
+    READY: { color: "#a78bfa", badge: "bg-purple-100 text-purple-700 dark:bg-purple-400/10 dark:text-purple-400", icon: Truck },
     DELIVERED: { color: "#10b981", badge: "bg-green-100 text-green-700 dark:bg-green-400/10 dark:text-green-400", icon: PackageCheck },
     CANCELLED: { color: "#f87171", badge: "bg-red-100 text-red-700 dark:bg-red-400/10 dark:text-red-400", icon: XCircle },
 };
@@ -56,7 +56,7 @@ export default async function OrderStatusPage({ params }: PageProps) {
     const StatusIcon = cfg.icon;
 
     // Calculate total
-    const totalAmount = order.items.reduce((sum, item) => sum + (Number(item.price) * item.quantity), 0);
+    const totalAmount = order.items.reduce((sum, item) => sum + (Number(item.price) * Number(item.quantity)), 0);
 
     return (
         <main className="min-h-screen bg-background pb-14">
@@ -146,7 +146,7 @@ export default async function OrderStatusPage({ params }: PageProps) {
                                         </div>
                                     </div>
                                     <div className="font-bold text-foreground text-sm shrink-0 pl-4">
-                                        ৳{(Number(item.price) * item.quantity).toFixed(2)}
+                                        ৳{(Number(item.price) * Number(item.quantity)).toFixed(2)}
                                     </div>
                                 </div>
                             ))}

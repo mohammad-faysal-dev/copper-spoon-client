@@ -28,27 +28,27 @@ import { OrderStatus } from "@/types/order.type";
 
 const statuses: OrderStatus[] = [
     "PENDING",
-    "CONFIRMED",
+    "PLACED",
     "PREPARING",
-    "OUT_FOR_DELIVERY",
+    "READY",
     "DELIVERED",
     "CANCELLED",
 ];
 
 const statusLabels: Record<OrderStatus, string> = {
     PENDING: "Pending",
-    CONFIRMED: "Confirmed",
+    PLACED: "Placed",
     PREPARING: "Preparing",
-    OUT_FOR_DELIVERY: "Out for Delivery",
+    READY: "Ready",
     DELIVERED: "Delivered",
     CANCELLED: "Cancelled",
 };
 
 const statusIcons: Record<OrderStatus, React.ElementType> = {
     PENDING: Clock3,
-    CONFIRMED: Check,
+    PLACED: Check,
     PREPARING: CircleDot,
-    OUT_FOR_DELIVERY: Truck,
+    READY: Truck,
     DELIVERED: PackageCheck,
     CANCELLED: XCircle,
 };

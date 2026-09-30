@@ -13,9 +13,9 @@ import { Textarea } from "@/components/ui/textarea";
 
 const providerProfileSchema = z.object({
     restaurantName: z.string().min(2, "Restaurant Name must be at least 2 characters"),
-    description: z.string().optional(),
-    phone: z.string().optional(),
-    address: z.string().optional(),
+    description: z.string(),
+    phone: z.string(),
+    address: z.string(),
 });
 
 type ProviderProfileFormProps = {

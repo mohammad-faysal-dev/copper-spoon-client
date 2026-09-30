@@ -17,7 +17,7 @@ import { menuService } from "@/services/menu.service";
 export default async function ProviderMealsPage() {
     const { data: meals, error } = await menuService.getMenus();
 
-    const availableCount = meals?.filter((m) => m.isAvailable).length ?? 0;
+    const availableCount = meals?.filter((m: any) => m.isAvailable).length ?? 0;
     const totalCount = meals?.length ?? 0;
 
     return (
@@ -124,7 +124,7 @@ export default async function ProviderMealsPage() {
                 ) : (
                     /* ── Meals Grid ── */
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                        {meals.map((meal) => (
+                        {meals.map((meal: any) => (
                             <div
                                 key={meal.id}
                                 className="group relative flex flex-col overflow-hidden rounded-3xl border border-border/60 bg-card shadow-sm transition-all duration-500 hover:shadow-2xl hover:-translate-y-1.5 hover:border-amber-300/30"
