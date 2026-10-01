@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <style>
+    /* Default (Light Mode): Dark background, Light text */
+    circle { fill: #1c1c1c; }
+    text { fill: #ffffff; }
+
+    /* Dark Mode: Light background, Dark text */
+    @media (prefers-color-scheme: dark) {
+      circle { fill: #e5e5e5; }
+      text { fill: #1c1c1c; }
+    }
+  </style>
+  <circle cx="50" cy="50" r="50" />
+  <text x="50%" y="55%" font-family="system-ui, sans-serif" font-weight="bold" font-size="60" dominant-baseline="middle" text-anchor="middle">C</text>
+</svg>
