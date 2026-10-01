@@ -42,13 +42,17 @@ export default async function Home() {
             </p>
 
             <div className="mt-6 flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <Button size="lg" className="rounded-full px-8 py-6 text-lg group bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300">
-                Book a Table
-                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-              </Button>
-              <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-lg border-white/20 text-white hover:bg-white/10 transition-all duration-300 bg-black/20 backdrop-blur-sm">
-                <Link href="/menu">View Menu</Link>
-              </Button>
+              <Link href="/contact">
+                <Button size="lg" className="rounded-full px-8 py-6 text-lg group bg-primary hover:bg-primary/90 text-primary-foreground transition-all duration-300">
+                  Book a Table
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </Link>
+              <Link href="/menu">
+                <Button size="lg" variant="outline" className="rounded-full px-8 py-6 text-lg border-white/20 text-white hover:bg-white/10 transition-all duration-300 bg-black/20 backdrop-blur-sm">
+                  View Menu
+                </Button>
+              </Link>
             </div>
           </div>
         </div>
@@ -182,9 +186,11 @@ export default async function Home() {
           <p className="text-primary-foreground/80 text-xl max-w-2xl mb-10">
             Secure your table tonight and experience a culinary journey that delights the senses and warms the soul.
           </p>
-          <Button size="lg" className="rounded-full px-10 py-7 text-lg bg-background text-primary hover:bg-background/90 shadow-2xl transition-transform hover:scale-105 duration-300">
-            Reserve Your Table Now
-          </Button>
+          <Link href="/contact">
+            <Button size="lg" className="rounded-full px-10 py-7 text-lg bg-background text-primary hover:bg-background/90 shadow-2xl transition-transform hover:scale-105 duration-300">
+              Reserve Your Table Now
+            </Button>
+          </Link>
         </div>
       </section>
     </div>

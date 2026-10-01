@@ -113,7 +113,7 @@ const Navbar1 = ({
 
         setIsLoggedIn(Boolean(user));
       } catch (error) {
-        console.error("Session check failed:", error);
+        console.warn("Session check failed:", error);
         setIsLoggedIn(false);
       } finally {
         setCheckingSession(false);
@@ -147,7 +147,7 @@ const Navbar1 = ({
 
       window.location.href = "/";
     } catch (error) {
-      console.error("Logout failed:", error);
+      console.warn("Logout failed:", error);
     } finally {
       setLoggingOut(false);
     }
@@ -156,7 +156,7 @@ const Navbar1 = ({
   return (
     <header
       className={cn(
-        "sticky top-2 z-50 mx-auto w-[95%] max-w-7xl rounded-2xl border border-border/40 bg-background shadow-lg shadow-black/5 backdrop-blur-xl transition-all sm:top-4 sm:rounded-full dark:shadow-black/20",
+        "fixed top-2 left-0 right-0 z-50 mx-auto w-[95%] max-w-7xl rounded-2xl border border-border/40 bg-background shadow-lg shadow-black/5 backdrop-blur-xl transition-all sm:top-4 sm:rounded-full dark:shadow-black/20",
         className,
       )}
     >

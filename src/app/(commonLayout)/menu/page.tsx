@@ -3,13 +3,18 @@ import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { menuService } from "@/services/menu.service";
-import { ChefHat, MapPin, ShoppingCart, Sparkles, ArrowRight } from "lucide-react";
+import { ChefHat, MapPin, ShoppingCart, Sparkles, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 
 export const revalidate = 0; // Ensure dynamic if needed
 
-const MenuPage = async () => {
+const MenuPage = async (props: { searchParams?: Promise<{ [key: string]: string | string[] | undefined }> }) => {
   const { data, error } = await menuService.getMenus();
+
+  const searchParams = props.searchParams ? await props.searchParams : {};
+  const pageParam = searchParams?.page;
+  const page = typeof pageParam === "string" ? parseInt(pageParam, 10) || 1 : 1;
+  const ITEMS_PER_PAGE = 8;
 
   if (error || !data) {
     return (
@@ -25,6 +30,10 @@ const MenuPage = async () => {
       </div>
     );
   }
+
+  const totalItems = data.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const currentData = data.slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -69,103 +78,154 @@ const MenuPage = async () => {
             </p>
           </div>
         ) : (
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {data.map((meal: any) => (
-              <div
-                key={meal.id}
-                className="group flex flex-col rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
-              >
-                {/* Image Section */}
-                <div className="relative h-56 overflow-hidden bg-muted">
-                  {meal.image ? (
-                    <img
-                      src={meal.image}
-                      alt={meal.name}
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-muted-foreground/30">
-                      <ChefHat className="size-12" />
-                    </div>
-                  )}
-
-                  {/* Top Badges */}
-                  <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-                    {meal.isAvailable ? (
-                      <Badge className="bg-green-600 hover:bg-green-700 text-white border-none shadow-sm font-medium">
-                        Available
-                      </Badge>
+          <>
+            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {currentData.map((meal: any) => (
+                <div
+                  key={meal.id}
+                  className="group flex flex-col rounded-2xl bg-card border border-border shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
+                >
+                  {/* Image Section */}
+                  <div className="relative h-56 overflow-hidden bg-muted">
+                    {meal.image ? (
+                      <img
+                        src={meal.image}
+                        alt={meal.name}
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
                     ) : (
-                      <Badge variant="destructive" className="border-none shadow-sm font-medium">
-                        Sold Out
-                      </Badge>
+                      <div className="flex h-full items-center justify-center text-muted-foreground/30">
+                        <ChefHat className="size-12" />
+                      </div>
                     )}
-                    {meal.dietary && (
-                      <Badge variant="secondary" className="bg-background/95 text-foreground border border-border shadow-sm font-medium">
-                        {meal.dietary}
-                      </Badge>
-                    )}
-                  </div>
-                </div>
 
-                {/* Content Section */}
-                <div className="flex flex-1 flex-col p-5">
-                  <div className="flex items-start justify-between gap-4 mb-2">
-                    <div className="min-w-0">
-                      <h2 className="truncate text-lg font-bold text-foreground group-hover:text-primary transition-colors">
-                        {meal.name}
-                      </h2>
-                      <div className="flex items-center gap-1.5 mt-1 text-xs text-muted-foreground font-medium truncate">
-                        <span className="text-primary truncate">{meal.cuisine} Cuisine</span>
-                        {meal.category?.name && (
-                          <>
-                            <span className="shrink-0">•</span>
-                            <span className="truncate">{meal.category.name}</span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <span className="text-xl font-bold text-foreground shrink-0">
-                      ৳{meal.price}
-                    </span>
-                  </div>
-
-                  <p className="line-clamp-2 text-sm text-muted-foreground mb-5 flex-1 leading-relaxed">
-                    {meal.description}
-                  </p>
-
-                  <div className="flex items-center justify-between pt-4 border-t border-border/50">
-                    {/* Provider Info */}
-                    <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
-                        <ChefHat className="h-4 w-4" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="truncate text-xs font-semibold text-foreground">
-                          {meal.provider?.restaurantName || "Copper Spoon Kitchen"}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex items-center gap-3 mt-5">
-                    <Link
-                      href={`/menu/${meal.id}`}
-                      className={cn(
-                        buttonVariants({ variant: "outline" }),
-                        "flex-1 h-10 rounded-xl border-border bg-background hover:bg-muted font-medium transition-colors text-sm",
-                        !meal.isAvailable && "pointer-events-none opacity-50"
+                    {/* Top Badges */}
+                    <div className="absolute left-3 top-3 flex flex-wrap gap-2">
+                      {meal.isAvailable ? (
+                        <Badge className="bg-green-600 hover:bg-green-700 text-white border-none shadow-sm font-medium">
+                          Available
+                        </Badge>
+                      ) : (
+                        <Badge variant="destructive" className="border-none shadow-sm font-medium">
+                          Sold Out
+                        </Badge>
                       )}
-                    >
-                      View Details
-                    </Link>
-                   <AddToCartButton meal={meal} />
+                      {meal.dietary && (
+                        <Badge variant="secondary" className="bg-background/95 text-foreground border border-border shadow-sm font-medium">
+                          {meal.dietary}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="flex flex-1 flex-col p-5">
+                    <div className="flex items-start justify-between gap-4 mb-2">
+                      <div className="min-w-0">
+                        <h2 className="truncate text-lg font-bold text-foreground group-hover:text-primary transition-colors">
+                          {meal.name}
+                        </h2>
+                        <div className="flex items-center gap-1.5 mt-1 text-xs text-muted-foreground font-medium truncate">
+                          <span className="text-primary truncate">{meal.cuisine} Cuisine</span>
+                          {meal.category?.name && (
+                            <>
+                              <span className="shrink-0">•</span>
+                              <span className="truncate">{meal.category.name}</span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <span className="text-xl font-bold text-foreground shrink-0">
+                        ৳{meal.price}
+                      </span>
+                    </div>
+
+                    <p className="line-clamp-2 text-sm text-muted-foreground mb-5 flex-1 leading-relaxed">
+                      {meal.description}
+                    </p>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-border/50">
+                      {/* Provider Info */}
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary/10 text-primary">
+                          <ChefHat className="h-4 w-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="truncate text-xs font-semibold text-foreground">
+                            {meal.provider?.restaurantName || "Copper Spoon Kitchen"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex items-center gap-3 mt-5">
+                      <Link
+                        href={`/menu/${meal.id}`}
+                        className={cn(
+                          buttonVariants({ variant: "outline" }),
+                          "flex-1 h-10 rounded-xl border-border bg-background hover:bg-muted font-medium transition-colors text-sm",
+                          !meal.isAvailable && "pointer-events-none opacity-50"
+                        )}
+                      >
+                        View Details
+                      </Link>
+                      <AddToCartButton meal={meal} />
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div className="mt-16 flex items-center justify-center gap-2">
+                <Link
+                  href={page > 1 ? `/menu?page=${page - 1}` : "#"}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "icon" }),
+                    "rounded-full w-12 h-12 border-border/60 hover:bg-primary/10 hover:text-primary transition-colors",
+                    page <= 1 && "pointer-events-none opacity-50"
+                  )}
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </Link>
+
+                <div className="flex items-center gap-1.5 mx-2">
+                  {Array.from({ length: totalPages }).map((_, i) => {
+                    const pageNumber = i + 1;
+                    const isActive = page === pageNumber;
+
+                    return (
+                      <Link
+                        key={i}
+                        href={`/menu?page=${pageNumber}`}
+                        className={cn(
+                          buttonVariants({ variant: isActive ? "default" : "outline", size: "icon" }),
+                          isActive
+                            ? "rounded-full w-12 h-12 font-bold shadow-md shadow-primary/20 bg-primary text-primary-foreground"
+                            : "rounded-full w-12 h-12 font-medium border-border/60 hover:bg-primary/5 transition-colors"
+                        )}
+                      >
+                        {pageNumber}
+                      </Link>
+                    )
+                  })}
+                </div>
+
+                <Link
+                  href={page < totalPages ? `/menu?page=${page + 1}` : "#"}
+                  className={cn(
+                    buttonVariants({ variant: "outline", size: "icon" }),
+                    "rounded-full w-12 h-12 border-border/60 hover:bg-primary/10 hover:text-primary transition-colors",
+                    page >= totalPages && "pointer-events-none opacity-50"
+                  )}
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </Link>
               </div>
-            ))}
-          </div>
+            )}
+          </>
         )}
       </main>
 

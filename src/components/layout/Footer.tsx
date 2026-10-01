@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   ArrowRight,
@@ -10,6 +12,7 @@ import {
   Send
 } from "lucide-react";
 
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
 const footerSections = [
@@ -18,17 +21,17 @@ const footerSections = [
     links: [
       { label: "Home", href: "/" },
       { label: "Our Menu", href: "/menu" },
-      { label: "Reservations", href: "/reservations" },
-      { label: "Chef's Table", href: "/chef-table" },
+      { label: "Reservations", href: "/contact" },
+      { label: "Chef's Table", href: "/menu" },
     ],
   },
   {
     title: "Company",
     links: [
       { label: "About Copper Spoon", href: "/about" },
-      { label: "Culinary Journal", href: "/journal" },
-      { label: "Our Suppliers", href: "/sustainability" },
-      { label: "Careers", href: "/careers" },
+      { label: "Culinary Journal", href: "/about" },
+      { label: "Our Suppliers", href: "/about" },
+      { label: "Careers", href: "/contact" },
     ],
   },
 ];
@@ -64,16 +67,29 @@ export function Footer({ className }: { className?: string }) {
             <h2 className="text-3xl font-bold text-foreground font-display">Join our inner circle</h2>
             <p className="text-muted-foreground">Subscribe for early access to seasonal menus, special events, and chef's secrets.</p>
           </div>
-          <div className="w-full md:w-auto relative flex items-center">
+          <form
+            className="w-full md:w-auto relative flex items-center"
+            onSubmit={(e) => {
+              e.preventDefault();
+              const input = (e.currentTarget.elements.namedItem('email') as HTMLInputElement);
+              if (input.value) {
+                toast.success("Thank you for subscribing to our newsletter!");
+                input.value = "";
+              } else {
+                toast.error("Please enter a valid email address.");
+              }
+            }}
+          >
             <input
               type="email"
+              name="email"
               placeholder="Your email address"
               className="w-full md:w-[350px] bg-card border border-border text-foreground rounded-full px-6 py-4 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors shadow-sm"
             />
-            <button className="absolute right-2 p-2 bg-primary text-primary-foreground rounded-full hover:scale-105 transition-transform shadow-md">
+            <button type="submit" className="absolute right-2 p-2 bg-primary text-primary-foreground rounded-full hover:scale-105 transition-transform shadow-md">
               <Send className="w-5 h-5 ml-1 mt-1 pr-1 pb-1" />
             </button>
-          </div>
+          </form>
         </div>
 
         {/* Main Footer Links */}
@@ -153,12 +169,16 @@ export function Footer({ className }: { className?: string }) {
             </ul>
 
             <div className="pt-2">
-              <Link
-                href="/reservations"
+              <button
+                type="button"
+                onClick={() => {
+                  toast.success("Redirecting to contact page for booking...");
+                  window.location.href = "/contact";
+                }}
                 className="inline-flex w-full justify-center items-center gap-2 rounded-xl bg-muted border border-border px-6 py-3 text-sm font-medium text-foreground transition-all hover:bg-primary hover:text-primary-foreground hover:border-primary hover:shadow-lg hover:shadow-primary/20"
               >
                 Book Your Table
-              </Link>
+              </button>
             </div>
           </div>
         </div>
@@ -168,10 +188,10 @@ export function Footer({ className }: { className?: string }) {
           <p>© {new Date().getFullYear()} Copper Spoon. All rights reserved.</p>
 
           <div className="flex flex-wrap items-center gap-6">
-            <Link href="/privacy" className="transition-colors hover:text-foreground">
+            <Link href="/about" className="transition-colors hover:text-foreground">
               Privacy Policy
             </Link>
-            <Link href="/terms" className="transition-colors hover:text-foreground">
+            <Link href="/about" className="transition-colors hover:text-foreground">
               Terms of Service
             </Link>
           </div>

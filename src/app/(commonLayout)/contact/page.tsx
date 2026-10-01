@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   ArrowRight,
@@ -9,6 +11,7 @@ import {
   Send,
   Sparkles,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,7 +67,13 @@ export default function ContactPage() {
               </p>
 
               {/* Form elements */}
-              <form className="space-y-6">
+              <form
+                className="space-y-6"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  toast.success("Your message has been sent successfully! We'll get back to you soon.");
+                }}
+              >
                 <div className="grid gap-6 md:grid-cols-2">
                   <div className="space-y-3">
                     <label htmlFor="name" className="text-sm font-semibold text-foreground">Name</label>
@@ -156,13 +165,14 @@ export default function ContactPage() {
               <p className="text-muted-foreground mb-8 max-w-sm relative z-10">
                 For groups larger than 8, or fully private events, please consult our events team.
               </p>
-              <Link
-                href="/events"
+              <button
+                type="button"
+                onClick={() => toast.info("Private event booking is currently unavailable. Please call us.")}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-bold text-primary-foreground transition-transform hover:scale-105 shadow-xl relative z-10"
               >
                 Inquire for Events
                 <ArrowRight className="h-5 w-5" />
-              </Link>
+              </button>
             </div>
           </div>
         </section>

@@ -71,7 +71,7 @@ export default function AboutPage() {
             </p>
             <div className="mt-4 flex flex-wrap justify-center gap-4">
               <Link
-                href="/reservations"
+                href="/contact"
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-base font-medium text-primary-foreground transition-transform hover:scale-105 shadow-xl hover:shadow-primary/25"
               >
                 Book a table
@@ -155,7 +155,7 @@ export default function AboutPage() {
               </p>
               <div className="flex flex-wrap justify-center gap-6">
                 <Link
-                  href="/reservations"
+                  href="/contact"
                   className="inline-flex items-center gap-2 rounded-full bg-background px-8 py-4 text-lg font-bold text-primary transition-transform hover:scale-105 shadow-xl"
                 >
                   Reserve your table
