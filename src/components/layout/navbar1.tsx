@@ -156,7 +156,7 @@ const Navbar1 = ({
   return (
     <header
       className={cn(
-        "sticky top-2 z-50 mx-auto w-[95%] max-w-7xl rounded-2xl border border-border/40 bg-background/60 shadow-lg shadow-black/5 backdrop-blur-xl transition-all sm:top-4 sm:rounded-full dark:shadow-black/20",
+        "sticky top-2 z-50 mx-auto w-[95%] max-w-7xl rounded-2xl border border-border/40 bg-background shadow-lg shadow-black/5 backdrop-blur-xl transition-all sm:top-4 sm:rounded-full dark:shadow-black/20",
         className,
       )}
     >

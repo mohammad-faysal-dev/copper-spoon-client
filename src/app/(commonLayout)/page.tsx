@@ -3,6 +3,7 @@ import { ArrowRight, Utensils, Clock, Star, MapPin, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { menuService } from "@/services/menu.service";
 import { userService } from "@/services/user.service";
+import { ParallaxSection } from "@/components/modules/ParallaxSection";
 
 export const dynamic = "force-dynamic";
 
@@ -167,6 +168,9 @@ export default async function Home() {
           ))}
         </div>
       </section>
+
+      {/* ── Parallax Section ── */}
+      <ParallaxSection />
 
       {/* CTA / Booking Banner Section */}
       <section className="py-24 relative overflow-hidden">
