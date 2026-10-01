@@ -4,6 +4,7 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Roles } from "@/constant/roles";
 import { userService } from "@/services/user.service";
+import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
   children,
@@ -19,9 +20,12 @@ export default async function DashboardLayout({
   const { data } = await userService.getSession();
   const userInfo = data?.user;
 
+  if (!userInfo) {
+    redirect("/login");
+  }
+
   return (
     <SidebarProvider>
-
       <AppSidebar user={userInfo}>
         <main className="flex-1 p-4">
           <SidebarTrigger />
@@ -31,10 +35,8 @@ export default async function DashboardLayout({
             {userInfo?.role === Roles.provider && provider}
             {children}
           </div>
-
         </main>
       </AppSidebar>
-
     </SidebarProvider>
   );
 }

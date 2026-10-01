@@ -233,9 +233,9 @@ export function AppSidebar({ user, children }: AppSidebarProps) {
 
             {/* Logout */}
             <SidebarMenuItem>
-              <button onClick={handleLogout} className="group flex w-full items-center justify-center gap-2 rounded-xl h-10 text-sm font-medium text-destructive/70 hover:text-destructive-foreground border border-destructive/15 hover:border-destructive/40 hover:bg-destructive transition-all duration-300 hover:shadow-lg hover:shadow-destructive/20">
-                <LogOut className="h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
-                <span>Log out</span>
+              <button onClick={handleLogout} className="group flex w-full items-center justify-center gap-2 rounded-xl h-10 text-sm font-medium text-destructive/70 border border-destructive/15 hover:border-destructive/40 hover:bg-destructive hover:text-white transition-all duration-300 hover:shadow-lg hover:shadow-destructive/20">
+                <LogOut className="h-4 w-4 group-hover:scale-110 group-hover:text-white transition-transform duration-300" />
+                <span className="group-hover:text-white">Log out</span>
               </button>
             </SidebarMenuItem>
           </SidebarMenu>
