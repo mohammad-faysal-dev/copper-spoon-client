@@ -1,46 +1,46 @@
-# Copper Spoon — Food Ordering Platform (Next.js 16 · React 19 · TypeScript)
+# Copper Spoon — Online Food Ordering Platform
 
-> A full-stack food ordering web app for restaurants and their customers — built with Next.js 16 App Router, Better Auth, TailwindCSS v4, and Shadcn/ui.
+> A full-stack food ordering platform where restaurant providers manage their business and customers place orders — all in one seamless experience.
 
-**Live Demo:** [copper-spoon-client.vercel.app](https://copper-spoon-client.vercel.app) &nbsp;|&nbsp; **Backend API:** [copper-spoon-server.vercel.app](https://copper-spoon-server.vercel.app)
+**Live Demo:** [copper-spoon-client.vercel.app](https://copper-spoon-client.vercel.app) &nbsp;·&nbsp; **Backend API:** [copper-spoon-server.vercel.app](https://copper-spoon-server.vercel.app)
 
 ---
 
-## What It Does
+## What Is This?
 
-Copper Spoon connects restaurant **providers** with **customers** through a role-aware platform:
+**Copper Spoon** is a role-based food ordering web application built for real-world use. It supports three types of users — each with their own dedicated dashboard and tailored experience.
 
-| Role | What they can do |
+| Role | Capabilities |
 |---|---|
-| **Customer** | Browse menus, add to cart, place orders, track live order status |
-| **Provider** | Manage restaurant profile, view & update incoming orders |
-| **Admin** | Manage categories and platform-level data |
+| **Customer** | Browse the menu, add items to cart, place orders, track order status in real time |
+| **Provider** | Manage restaurant profile, monitor and update incoming orders |
+| **Admin** | Oversee platform data, manage food categories |
 
 ---
 
 ## Tech Stack
 
+Built with a modern, production-ready stack:
+
 | Layer | Technology |
 |---|---|
-| Framework | [Next.js 16](https://nextjs.org/) — App Router, SSR, Route Groups |
+| Framework | [Next.js 16](https://nextjs.org/) — App Router, SSR, Parallel Routes |
 | Language | TypeScript 5 |
-| UI | [TailwindCSS v4](https://tailwindcss.com/) + [Shadcn/ui](https://ui.shadcn.com/) + Base-UI |
-| Auth | [Better Auth](https://better-auth.com/) (session-based, role-gated routes) |
-| Validation | [Zod v4](https://zod.dev/) + TanStack Form |
-
-| Notifications | Sonner (toast system) |
+| Styling | [TailwindCSS v4](https://tailwindcss.com/) + [Shadcn/ui](https://ui.shadcn.com/) |
+| Auth | [Better Auth](https://better-auth.com/) — session-based, role-gated access |
+| Forms & Validation | [Zod v4](https://zod.dev/) + TanStack Form |
+| Notifications | Sonner |
 | Icons | Lucide React |
 
 ---
 
 ## Key Features
 
-- **Role-Based Dashboards** — Three parallel dashboard views (@admin, @customer, @provider) using Next.js parallel routes, each with role-gated access via Better Auth middleware.
-- **Live Order Tracking** — Visual progress stepper that reflects real-time order status updates (Pending → Processing → Delivered).
-
-- **Smooth Checkout Flow** — Cart → Checkout → Order Confirmation with proper back-navigation and order creation via the backend API.
-- **Provider Profile Management** — Restaurant providers can update their restaurant name, description, phone, and address through a validated form.
-- **Premium UI/UX** — Glassmorphism-inspired design: gradient backgrounds, micro-animations, responsive layouts.
+- **Role-Based Access Control** — Each role (admin, provider, customer) has its own protected dashboard powered by Next.js parallel routes and Better Auth middleware.
+- **Live Order Tracking** — Customers see their order progress update in real time: `Pending → Processing → Delivered`.
+- **Smooth Checkout Flow** — Add to cart, review order, confirm — clean and distraction-free.
+- **Provider Profile Management** — Providers can update their restaurant name, address, phone, and description from the dashboard.
+- **Premium UI/UX** — Glassmorphism-inspired design with gradient backgrounds, smooth micro-animations, and a fully responsive layout.
 
 ---
 
@@ -50,153 +50,118 @@ Copper Spoon connects restaurant **providers** with **customers** through a role
 copper-spoon-client/
 ├── src/
 │   ├── app/
-│   │   ├── (commonLayout)/     # Public pages: home, menu, auth
-│   │   └── (dashboardLayout)/  # Protected dashboards per role
-│   │       ├── @admin/         # Admin panel (categories, management)
-│   │       ├── @customer/      # Customer: orders, cart, profile
-│   │       └── @provider/      # Provider: orders, profile, invoices
-│   ├── components/             # Reusable UI components (layout, shadcn)
-│   ├── services/               # API service layer (menu, order, provider, etc.)
-│   ├── hooks/                  # Custom React hooks
-│   ├── lib/                    # Utilities, auth client config
-│   ├── routes/                 # Route constants and middleware helpers
-│   ├── providers/              # React context providers
-│   └── types/                  # TypeScript interfaces and Zod schemas
-└── public/                     # Static assets
+│   │   ├── (commonLayout)/        # Public pages: Home, Menu, Login, Register
+│   │   └── (dashboardLayout)/     # Protected dashboards (role-gated)
+│   │       ├── @admin/            # Admin: category & platform management
+│   │       ├── @customer/         # Customer: orders, cart, profile
+│   │       └── @provider/         # Provider: orders, restaurant profile
+│   ├── components/                # Reusable UI components
+│   ├── services/                  # API layer (menu, orders, auth, etc.)
+│   ├── hooks/                     # Custom React hooks
+│   ├── lib/                       # Auth client, utility functions
+│   └── types/                     # TypeScript interfaces & Zod schemas
+└── public/                        # Static assets
 ```
 
 ---
 
-## Getting Started
+## Demo Credentials
+
+Want to explore the platform right now? Use these pre-seeded test accounts — no sign-up needed:
+
+**Admin**
+```
+Email:    admin@gmail.com
+Password: 12345678
+```
+
+**Provider**
+```
+Email:    rahim@gmail.com
+Password: 12345678
+```
+
+**Customer**
+```
+Email:    foysal@gmail.com
+Password: 12345678
+```
+
+> Go to [/login](https://copper-spoon-client.vercel.app/login), enter the credentials, and you'll be redirected to the appropriate dashboard automatically.
+
+---
+
+## Run Locally
 
 ### Prerequisites
+- Node.js v20+
+- Copper Spoon Backend running on port `5000`
 
-- **Node.js v20+**
-- The **[Copper Spoon Backend API](TODO: backend repo link)** running locally on port `5000`
-
-### 1. Clone & Install
+### Steps
 
 ```bash
+# 1. Clone the repo
 git clone https://github.com/mohammad-faysal-dev/copper-spoon-client.git
 cd copper-spoon-client
+
+# 2. Install dependencies
 npm install
+
+# 3. Start the dev server
+npm run dev
 ```
 
-### 2. Configure Environment Variables
-
-Create a `.env.local` file in the root directory with the following:
+Create a `.env.local` file in the root before running:
 
 ```env
-# Backend API base URL (no trailing slash)
 NEXT_PUBLIC_API_URL=http://localhost:5000
-
-# Internal API URL (used in server-side fetches)
 API_URL=http://localhost:5000
-
-# App URL (used by Better Auth for redirects)
 APP_URL=http://localhost:3000
-
-# Better Auth session endpoint
 AUTH_URL=http://localhost:5000/api/auth
-
-# Better Auth secret — generate with: openssl rand -base64 32
-AUTH_SECRET=your_secret_here
-```
-
-> ⚠️ There is no `.env.local.example` file in this repo yet. Copy the block above directly.
-
-### 3. Run the Development Server
-
-```bash
-npm run dev
+AUTH_SECRET=your_secret_here   # generate: openssl rand -base64 32
 ```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 🔐 Test Credentials (Demo Logins)
-
-You can use the following pre-seeded accounts to explore the platform without registering:
-
-### 👑 Admin Login
-> Full platform management access — manage categories and platform-level data.
-
-| Field    | Value                  |
-|----------|------------------------|
-| Email    | `admin@gmail.com`      |
-| Password | `12345678`             |
-
-1. Go to [http://localhost:3000/login](http://localhost:3000/login)
-2. Enter the email and password above
-3. Click **Login** — you will be redirected to the **Admin Dashboard**
-
----
-
-### 🍽️ Provider Login
-> Restaurant provider access — manage restaurant profile, view & update orders, export invoices.
-
-| Field    | Value                  |
-|----------|------------------------|
-| Email    | `rahim@gmail.com`      |
-| Password | `12345678`             |
-
-1. Go to [http://localhost:3000/login](http://localhost:3000/login)
-2. Enter the email and password above
-3. Click **Login** — you will be redirected to the **Provider Dashboard**
-
----
-
-### 🛒 Customer Login
-> Customer access — browse menus, add to cart, place orders, and track live order status.
-
-| Field    | Value                  |
-|----------|------------------------|
-| Email    | `foysal@gmail.com`     |
-| Password | `12345678`             |
-
-1. Go to [http://localhost:3000/login](http://localhost:3000/login)
-2. Enter the email and password above
-3. Click **Login** — you will be redirected to the **Customer Dashboard**
-
----
-
 ## Available Scripts
 
-| Script | Description |
+| Command | Description |
 |---|---|
-| `npm run dev` | Start the development server |
+| `npm run dev` | Start development server |
 | `npm run build` | Build for production |
-| `npm run start` | Start the production server |
+| `npm run start` | Start production server |
 | `npm run lint` | Run ESLint |
 
 ---
 
-## Troubleshooting
+## Common Issues
 
-**Zod validation error on the profile page**
-Ensure your backend returns the exact schema the frontend expects. Double-check `NEXT_PUBLIC_API_URL` points to your running backend instance.
+**Sessions not loading after login**
+→ Clear browser cookies, restart the dev server, and verify `AUTH_SECRET` and `AUTH_URL` are correctly set.
 
-**Better Auth sessions not loading**
-Clear browser cookies and restart the dev server. Verify `AUTH_SECRET` is set and `AUTH_URL` matches your backend's auth endpoint.
+**401 errors / orders not fetching**
+→ Make sure `API_URL` is set correctly. Server-side fetches use `API_URL`, not `NEXT_PUBLIC_API_URL`.
 
-**Orders not fetching / 401 errors**
-Server-side fetches pass cookies manually. Ensure the backend is running and `API_URL` is set correctly (not `NEXT_PUBLIC_API_URL` — these serve different purposes).
+**Profile page validation errors**
+→ Ensure the backend is returning data in the exact shape the frontend expects. Check `NEXT_PUBLIC_API_URL`.
 
 ---
 
 ## Roadmap
 
-- [ ] Stripe integration for real-time payment processing
-- [ ] Dark mode toggle across all dashboard components
+- [ ] Stripe payment integration
+- [ ] Dark mode across all dashboards
+- [ ] Sales analytics charts for providers
 - [ ] Multi-language support (i18n)
-- [ ] Sales analytics charts for provider dashboard
 
 ---
 
 ## Author
 
-**Mohammad Faysal**
+**Mohammad Faysal** — Full Stack Developer
+
 - GitHub: [@mohammad-faysal-dev](https://github.com/mohammad-faysal-dev)
 - LinkedIn: [mohammad-foysal-dev](https://www.linkedin.com/in/mohammad-foysal-dev/)
 - Portfolio: [mohammad-faysal-dev.netlify.app](https://mohammad-faysal-dev.netlify.app/)
