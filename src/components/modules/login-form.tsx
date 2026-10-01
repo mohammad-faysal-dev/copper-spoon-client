@@ -53,8 +53,16 @@ export function LoginForm({
 
         toast.success("Signed in successfully", { id: toastId });
 
-        // Redirect to homepage with a hard refresh so navbar updates immediately
-        window.location.href = "/";
+        const userRole = (data?.user as any)?.role as string;
+        if (userRole === "admin") {
+          window.location.href = "/admin-dashboard";
+        } else if (userRole === "customer") {
+          window.location.href = "/dashboard";
+        } else if (userRole === "provider") {
+          window.location.href = "/provider-dashboard";
+        } else {
+          window.location.href = "/";
+        }
       } catch (err) {
         toast.error("Something went wrong, please try again", { id: toastId });
       }

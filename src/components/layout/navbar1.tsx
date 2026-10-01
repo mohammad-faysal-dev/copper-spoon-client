@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useState } from "react";
 import { LogOut, Menu } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { authClient } from "@/lib/auth";
 
 import {
   NavigationMenu,
@@ -81,71 +81,21 @@ const Navbar1 = ({
 
   className,
 }: Navbar1Props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [checkingSession, setCheckingSession] = useState(true);
+  const { data: session, isPending: checkingSession } = authClient.useSession();
+  const isLoggedIn = Boolean(session?.user);
   const [loggingOut, setLoggingOut] = useState(false);
-
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-  // Check current session
-  useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const res = await fetch(
-          `${API_URL}/api/auth/get-session`,
-          {
-            method: "GET",
-            credentials: "include",
-          },
-        );
-
-        if (!res.ok) {
-          setIsLoggedIn(false);
-          return;
-        }
-
-        const result = await res.json();
-
-        const user =
-          result?.user ??
-          result?.data?.user ??
-          null;
-
-        setIsLoggedIn(Boolean(user));
-      } catch (error) {
-        console.warn("Session check failed:", error);
-        setIsLoggedIn(false);
-      } finally {
-        setCheckingSession(false);
-      }
-    };
-
-    checkSession();
-  }, [API_URL]);
 
   // Logout
   const handleLogout = async () => {
     setLoggingOut(true);
-
     try {
-      const res = await fetch(
-        `${API_URL}/api/auth/sign-out`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
+      await authClient.signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            window.location.href = "/";
           },
         },
-      );
-
-      if (!res.ok) {
-        throw new Error("Logout failed");
-      }
-
-      setIsLoggedIn(false);
-
-      window.location.href = "/";
+      });
     } catch (error) {
       console.warn("Logout failed:", error);
     } finally {
