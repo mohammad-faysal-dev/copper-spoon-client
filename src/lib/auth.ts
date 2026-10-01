@@ -1,7 +1,10 @@
 import { createAuthClient } from "better-auth/react";
 
-const API_URL = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000").replace(/\/$/, "");
+// baseURL must be the FRONTEND URL (not backend) so that auth requests go through
+// Next.js rewrites (/api/auth/* → backend). This ensures session cookies are set
+// on the frontend domain and Next.js server-side can read them.
+const APP_URL = (process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000").replace(/\/$/, "");
 
 export const authClient = createAuthClient({
-  baseURL: API_URL,
+  baseURL: APP_URL,
 });
