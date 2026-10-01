@@ -2,7 +2,7 @@
 
 > A full-stack food ordering web app for restaurants and their customers — built with Next.js 16 App Router, Better Auth, TailwindCSS v4, and Shadcn/ui.
 
-**Live Demo:** [TODO: add deployed URL] &nbsp;|&nbsp; **Backend API:** [TODO: add backend repo URL] &nbsp;|&nbsp; **Portfolio:** [TODO: add portfolio URL]
+**Live Demo:** [copper-spoon-client.vercel.app](https://copper-spoon-client.vercel.app) &nbsp;|&nbsp; **Backend API:** [copper-spoon-server.vercel.app](https://copper-spoon-server.vercel.app)
 
 ---
 
@@ -13,7 +13,7 @@ Copper Spoon connects restaurant **providers** with **customers** through a role
 | Role | What they can do |
 |---|---|
 | **Customer** | Browse menus, add to cart, place orders, track live order status |
-| **Provider** | Manage restaurant profile, view & update incoming orders, export expense invoices as PDF |
+| **Provider** | Manage restaurant profile, view & update incoming orders |
 | **Admin** | Manage categories and platform-level data |
 
 ---
@@ -27,7 +27,7 @@ Copper Spoon connects restaurant **providers** with **customers** through a role
 | UI | [TailwindCSS v4](https://tailwindcss.com/) + [Shadcn/ui](https://ui.shadcn.com/) + Base-UI |
 | Auth | [Better Auth](https://better-auth.com/) (session-based, role-gated routes) |
 | Validation | [Zod v4](https://zod.dev/) + TanStack Form |
-| PDF Export | html2pdf.js (expense invoice generation) |
+
 | Notifications | Sonner (toast system) |
 | Icons | Lucide React |
 
@@ -37,7 +37,7 @@ Copper Spoon connects restaurant **providers** with **customers** through a role
 
 - **Role-Based Dashboards** — Three parallel dashboard views (@admin, @customer, @provider) using Next.js parallel routes, each with role-gated access via Better Auth middleware.
 - **Live Order Tracking** — Visual progress stepper that reflects real-time order status updates (Pending → Processing → Delivered).
-- **Expense Invoice PDF** — Providers can download formatted PDF invoices per expense record directly from the dashboard dropdown.
+
 - **Smooth Checkout Flow** — Cart → Checkout → Order Confirmation with proper back-navigation and order creation via the backend API.
 - **Provider Profile Management** — Restaurant providers can update their restaurant name, description, phone, and address through a validated form.
 - **Premium UI/UX** — Glassmorphism-inspired design: gradient backgrounds, micro-animations, responsive layouts.
@@ -115,6 +115,52 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
+## 🔐 Test Credentials (Demo Logins)
+
+You can use the following pre-seeded accounts to explore the platform without registering:
+
+### 👑 Admin Login
+> Full platform management access — manage categories and platform-level data.
+
+| Field    | Value                  |
+|----------|------------------------|
+| Email    | `admin@gmail.com`      |
+| Password | `12345678`             |
+
+1. Go to [http://localhost:3000/login](http://localhost:3000/login)
+2. Enter the email and password above
+3. Click **Login** — you will be redirected to the **Admin Dashboard**
+
+---
+
+### 🍽️ Provider Login
+> Restaurant provider access — manage restaurant profile, view & update orders, export invoices.
+
+| Field    | Value                  |
+|----------|------------------------|
+| Email    | `rahim@gmail.com`      |
+| Password | `12345678`             |
+
+1. Go to [http://localhost:3000/login](http://localhost:3000/login)
+2. Enter the email and password above
+3. Click **Login** — you will be redirected to the **Provider Dashboard**
+
+---
+
+### 🛒 Customer Login
+> Customer access — browse menus, add to cart, place orders, and track live order status.
+
+| Field    | Value                  |
+|----------|------------------------|
+| Email    | `foysal@gmail.com`     |
+| Password | `12345678`             |
+
+1. Go to [http://localhost:3000/login](http://localhost:3000/login)
+2. Enter the email and password above
+3. Click **Login** — you will be redirected to the **Customer Dashboard**
+
+---
+
 ## Available Scripts
 
 | Script | Description |
@@ -152,8 +198,8 @@ Server-side fetches pass cookies manually. Ensure the backend is running and `AP
 
 **Mohammad Faysal**
 - GitHub: [@mohammad-faysal-dev](https://github.com/mohammad-faysal-dev)
-- LinkedIn: [TODO: add LinkedIn URL]
-- Portfolio: [TODO: add portfolio URL]
+- LinkedIn: [mohammad-foysal-dev](https://www.linkedin.com/in/mohammad-foysal-dev/)
+- Portfolio: [mohammad-faysal-dev.netlify.app](https://mohammad-faysal-dev.netlify.app/)
 
 ---
 
