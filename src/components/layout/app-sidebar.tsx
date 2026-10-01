@@ -69,7 +69,7 @@ export function AppSidebar({ user, children }: AppSidebarProps) {
           ? providerRoutes
           : [];
 
-  const role = ROLE_META[user.role] ?? ROLE_META.provider;
+  const role = ROLE_META[user.role?.toLowerCase()] ?? ROLE_META.provider;
 
   return (
     <>

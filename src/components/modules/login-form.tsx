@@ -55,15 +55,14 @@ export function LoginForm({
 
         const userRole = (data?.user as any)?.role as string;
         if (userRole === "admin") {
-          router.push("/admin-dashboard");
+          window.location.href = "/admin-dashboard";
         } else if (userRole === "customer") {
-          router.push("/dashboard");
+          window.location.href = "/dashboard";
         } else if (userRole === "provider") {
-          router.push("/provider-dashboard");
+          window.location.href = "/provider-dashboard";
         } else {
-          router.push("/");
+          window.location.href = "/";
         }
-        router.refresh();
       } catch (err) {
         toast.error("Something went wrong, please try again", { id: toastId });
       }

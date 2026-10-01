@@ -1,6 +1,6 @@
 import { CreateProviderProfilePayload, Provider } from "@/types/provider.type";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const providerService = {
   getProviders: async function () {
