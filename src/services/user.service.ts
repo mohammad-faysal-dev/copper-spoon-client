@@ -1,6 +1,9 @@
 import { cookies } from "next/headers";
 
-const AUTH_URL = process.env.AUTH_URL;
+const AUTH_URL =
+  process.env.INTERNAL_API_URL
+    ? `${process.env.INTERNAL_API_URL}/api/auth`
+    : process.env.AUTH_URL;
 
 
 export const userService = {
@@ -23,5 +26,5 @@ export const userService = {
       return { data: null, error: { message: "Failed to fetch session" } };
     }
   },
-  
+
 };

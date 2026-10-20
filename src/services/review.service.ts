@@ -1,7 +1,9 @@
 import { CreateReviewPayload, Review, UpdateReviewPayload } from "@/types/review.type";
 
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL =
+  process.env.INTERNAL_API_URL ||
+  process.env.NEXT_PUBLIC_API_URL;
 
 export const reviewService = {
   // Get Review By ID
