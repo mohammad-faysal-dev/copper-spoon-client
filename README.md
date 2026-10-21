@@ -125,6 +125,30 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
+## Run with Docker
+
+### Prerequisites
+- [Docker](https://www.docker.com/) installed on your machine
+- Copper Spoon Backend running and accessible
+
+```bash
+# Build the image
+docker build -t copper-spoon-client .
+
+# Run the container
+docker run -p 3000:3000 \
+  -e NEXT_PUBLIC_API_URL=http://your-backend-url:5000 \
+  -e API_URL=http://your-backend-url:5000 \
+  -e APP_URL=http://localhost:3000 \
+  -e AUTH_URL=http://your-backend-url:5000/api/auth \
+  -e AUTH_SECRET=your_secret_here \
+  copper-spoon-client
+```
+
+> The app will be available at [http://localhost:3000](http://localhost:3000).
+
+---
+
 ## Available Scripts
 
 | Command | Description |
@@ -146,6 +170,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 **Profile page validation errors**
 → Ensure the backend is returning data in the exact shape the frontend expects. Check `NEXT_PUBLIC_API_URL`.
+
 
 ---
 
